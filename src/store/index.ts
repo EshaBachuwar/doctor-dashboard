@@ -5,22 +5,29 @@ import {
     Store,
     Middleware
 } from 'redux';
-import { thunk as thunkMiddleware, ThunkMiddleware } from 'redux-thunk';
+import { thunk as thunkMiddleware, ThunkMiddleware,ThunkDispatch } from 'redux-thunk';
 import { authReducer } from '../reducers/authReducer';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { AuthState } from '../types/auth';
 import { AuthActionTypes } from '../actions/authActions';
+import { patientReducer } from '../reducers/patientReducer';
+import { PatientState } from '@/types/patient';
+import { PatientActionTypes } from '@/actions/patientActions';
 
 export interface RootState {
     auth: AuthState;
+    patients: PatientState;
 }
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    patients: patientReducer
 });
-
-const middlewares: Middleware<{}, RootState>[] = [thunkMiddleware as unknown as ThunkMiddleware<RootState, AuthActionTypes>];
-
+type AppActions = AuthActionTypes | PatientActionTypes;
+export type AppDispatch = ThunkDispatch<RootState, void, AppActions>;
+const middlewares: Middleware<{}, RootState>[] = [
+    thunkMiddleware as ThunkMiddleware<RootState, AppActions>
+];
 const enhancer = composeWithDevTools(applyMiddleware(...middlewares));
 
 export function setupStore(preloadedState?: Partial<RootState>) {
@@ -35,5 +42,4 @@ export const store = setupStore();
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

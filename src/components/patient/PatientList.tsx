@@ -1,11 +1,21 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../shared/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store';
+import { fetchPatients } from '@/actions/patientThunks';
 interface PatientListProps {
     setRightPanel: (panel: string) => void;
 }
 
 export const PatientList: React.FC<PatientListProps> = ({ setRightPanel }) => {
+    const dispatch = useDispatch<AppDispatch>();
+    const { patients, loading, error } = useSelector((state: RootState) => state.patients);
+
+    useEffect(() => {
+        dispatch(fetchPatients());
+    }, [dispatch]);
+
     const handleAddPatient = () => {
         setRightPanel('add');
         console.log('Add new patient');
