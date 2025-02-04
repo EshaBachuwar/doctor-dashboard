@@ -33,7 +33,8 @@ export type AuthActionTypes =
     | LoginRequestAction
     | LoginSuccessAction
     | LoginFailureAction
-    | ClearErrorAction;
+    | ClearErrorAction
+    | LogoutRequestAction;
 
 export const registerRequest = (): RegisterRequestAction => ({
     type: REGISTER_REQUEST
@@ -84,4 +85,11 @@ export const loginSuccess = (data: { doctor: Doctor; token: string }): LoginSucc
 export const loginFailure = (error: string): LoginFailureAction => ({
     type: LOGIN_FAILURE,
     payload: error
+});
+export const LOGOUT = 'AUTH/LOGOUT';
+interface LogoutRequestAction {
+    type: typeof LOGOUT;
+}
+export const logout = (error: string): LogoutRequestAction => ({
+    type: LOGOUT,
 });

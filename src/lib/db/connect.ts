@@ -10,6 +10,7 @@ declare global {
 global.mongoose = global.mongoose || { conn: null, promise: null };
 
 async function dbConnect() {
+  console.log('dbConnect');
   if (global.mongoose.conn) return global.mongoose.conn;
 
   if (!global.mongoose.promise) {

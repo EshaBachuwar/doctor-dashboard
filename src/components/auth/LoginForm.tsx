@@ -10,6 +10,7 @@ import {
   loginFailure,
 } from '@/actions/authActions';
 import { useAppDispatch, useAppSelector } from '@/store';
+import Link from 'next/link';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -41,7 +42,7 @@ export const LoginForm = () => {
     dispatch(loginRequest());
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -51,6 +52,7 @@ export const LoginForm = () => {
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
+        console.log(data)
         dispatch(loginSuccess(data));
         router.push('/dashboard');
       } else {
@@ -62,27 +64,32 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-      <Input
-        type="email"
-        name="email"
-        label="Email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-      <Input
-        type="password"
-        name="password"
-        label="Password"
-        value={formData.password}
-        onChange={handleChange}
-        required
-      />
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-      <Button type="submit" disabled={loading} className="w-full">
-        {loading ? 'Logging in...' : 'Login'}
-      </Button>
-    </form>
+    <div className="space-y-4 max-w-md mx-auto text-black">
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto text-black">
+        <Input
+          type="email"
+          name="email"
+          label="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <Input
+          type="password"
+          name="password"
+          label="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        <Button type="submit" disabled={loading} className="w-full">
+          {loading ? 'Logging in...' : 'Login'}
+        </Button>
+      </form>
+      <Link href="/register" className="text-blue-500 mt-5">
+        Don't have an account? Register
+      </Link>
+    </div>
   );
 };

@@ -5,20 +5,14 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
     try {
         await dbConnect();
-
-        // Parse request body
         const body = await request.json();
-        const { name, age, gender, email, password, specialization } = body;
-
-        // Validate required fields
+        const { name, age, gender,phone, specialization, email, password } = body;
         if (!name || !email || !password || !specialization) {
             return NextResponse.json(
                 { message: 'Please provide all required fields' },
                 { status: 400 }
             );
         }
-
-        // Check if doctor already exists
         let doctor = await Doctor.findOne({ email });
         if (doctor) {
             return NextResponse.json(
@@ -26,33 +20,29 @@ export async function POST(request: Request) {
                 { status: 400 }
             );
         }
-
-        // Create new doctor (password hashing is handled by the model)
         doctor = new Doctor({
             name,
-            age,
+            age: age ? parseInt(age) : null,
             gender,
+            phone,
+            specialization,
             email,
-            password,
-            specialization
+            password
         });
 
         await doctor.save();
-
-        // Generate JWT
         const token = jwt.sign(
             { id: doctor._id },
             process.env.JWT_SECRET!,
             { expiresIn: '1d' }
         );
-
-        // Return response without password
         return NextResponse.json({
             token,
             doctor: {
                 id: doctor._id,
                 name: doctor.name,
                 age: doctor.age,
+                phone: doctor.phone,
                 gender: doctor.gender,
                 email: doctor.email,
                 specialization: doctor.specialization

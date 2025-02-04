@@ -1,6 +1,6 @@
 
 import { AuthState } from '@/types/auth';
-import { 
+import {
     AuthActionTypes,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -8,7 +8,8 @@ import {
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
-    CLEAR_ERROR
+    CLEAR_ERROR,
+    LOGOUT
 } from '../actions/authActions';
 
 const initialState: AuthState = {
@@ -50,6 +51,10 @@ export const authReducer = (
             return {
                 ...state,
                 error: null
+            };
+        case LOGOUT:
+            return {
+                ...initialState
             };
         default:
             return state;
