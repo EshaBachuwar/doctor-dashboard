@@ -15,7 +15,6 @@ export const PatientList: React.FC<PatientListProps> = ({ setRightPanel }) => {
     useEffect(() => {
         dispatch(fetchPatients());
     }, [dispatch]);
-
     const handleAddPatient = () => {
         setRightPanel('add');
         console.log('Add new patient');
@@ -64,7 +63,9 @@ export const PatientList: React.FC<PatientListProps> = ({ setRightPanel }) => {
                         </tr>
                     </tbody>
                 </table>
-                <Button className="mt-4 w-full" onClick={handleAddPatient}>Add new patient</Button>
+                <div className='flex justify-center'>
+                <Button className="mt-4 w-[50%]" onClick={handleAddPatient}>Add new patient</Button>
+                </div>
             </div>
         </div>
     );
