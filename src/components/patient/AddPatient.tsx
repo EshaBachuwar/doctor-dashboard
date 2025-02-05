@@ -178,7 +178,7 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                     />
                      </div>
                      <div className='md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
-                     <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">Diagnoses :</label>
+                     <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">Diagnosis :</label>
                     <input
                         type="text"
                         value={formData.diagnosis}

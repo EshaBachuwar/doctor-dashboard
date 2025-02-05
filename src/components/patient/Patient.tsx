@@ -21,7 +21,7 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
         setRightPanel('list');
     }
     const handleEdit = () => {
-        setRightPanel('edit');
+        // setRightPanel('edit');
     }
     console.log(selectedPatient);
     return (
@@ -30,7 +30,7 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
                 <Button variant="outline" onClick={handleEdit}>Edit</Button>
                 <Button variant="outline" onClick={handleOnClose}>Close</Button>
             </div>
-            <div>
+            <div className='gap-3'>
                 <h2 className="text-2xl font-bold">Patient Details</h2>
                 <div className="grid grid-cols-5 gap-4 mt-4">
                     <div>
@@ -46,12 +46,52 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
                         <span>{selectedPatient?.weight}</span>
                     </div>
                     <div>
+                        <label className="text-gray-600">Gender : </label>
+                        <span>{selectedPatient?.gender}</span>
+                    </div>
+                    <div>
                         <label className="text-gray-600">Blood Group : </label>
                         <span>{selectedPatient?.bloodGroup}</span>
                     </div>
+                </div>
+                <div className="flex justify-between mt-4 mr-8">
                     <div>
-                        <label className="text-gray-600">Gender : </label>
-                        <span>{selectedPatient?.gender}</span>
+                        <label className='text-gray-600'>Phone Number : </label>
+                        <span>{selectedPatient?.phone}</span>
+                    </div>
+                    <div>
+                        <label className='text-gray-600'>Next Visit : </label>
+                        <span>{selectedPatient?.nextVisit}</span>
+                    </div>
+                </div>
+                <div className=" mt-4">
+                    <div>
+                        <label className="text-gray-600">Known Allergies : </label>
+                        <span>{selectedPatient?.knownAllergies}</span>
+                    </div>
+                </div>
+                <div className=" mt-4">
+                    <div>
+                        <label className="text-gray-600">Reason Of Visit : </label>
+                        <span>{selectedPatient?.reasonOfVisit}</span>
+                    </div>
+                </div>
+                <div className=" mt-4">
+                    <div>
+                        <label className="text-gray-600">Diagosis : </label>
+                        <span>{selectedPatient?.diagnosis}</span>
+                    </div>
+                </div>
+                <div className=" mt-4">
+                    <div>
+                        <label className="text-gray-600">Prescribed Mediacation : </label>
+                        <span>{selectedPatient?.prescribedMedication}</span>
+                    </div>
+                </div>
+                <div className=" mt-4">
+                    <div>
+                        <label className="text-gray-600">Reports : </label>
+                        <span></span>
                     </div>
                 </div>
             </div>
