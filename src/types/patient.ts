@@ -2,14 +2,21 @@ export interface Patient {
     id: string;
     name: string;
     age: number;
-    gender: 'male' | 'female' | 'other';
-    contact: string;
-    medicalHistory: string;
-    doctor: string;
-    email?: string;
+    gender: string;
     phone?: string;
-    prescriptions: string[];
-    reports: string[];
+    weight?: number;
+    bloodGroup?: string;
+    knownAllergies?: string;
+    medicalHistory?: string;
+    currentMedication?: string;
+    reasonOfVisit?: string;
+    symptoms?: string;
+    diagnosis?: string;
+    prescribedMedication?: string;
+    nextVisit?: string;
+    doctor?: string;
+    prescriptions?: string[];
+    reports?: string[];
     createdAt: string;
     updatedAt: string;
 }

@@ -15,10 +15,13 @@ import {
 } from './patientActions';
 import { Patient } from '@/types/patient';
 
-export const fetchPatients = () => async (dispatch: AppDispatch) => {
+export const fetchPatients = (doctorId:string) => async (dispatch: AppDispatch) => {
     dispatch(fetchPatientsRequest());
     try {
-        const response = await fetch('/api/patients');
+        const response = await fetch(`/api/patients?doctorId=${doctorId}`,{
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
         if (!response.ok) throw new Error(`Error ${response.status}: Failed to fetch patients`);
 
         const data = await response.json();
@@ -41,6 +44,7 @@ export const addPatient = (patientData: Omit<Patient, 'id'>) => async (dispatch:
 
         const data = await response.json();
         dispatch(addPatientSuccess(data));
+        return data;
     } catch (error) {
         dispatch(addPatientFailure(error instanceof Error ? error.message : 'Unexpected error'));
     }

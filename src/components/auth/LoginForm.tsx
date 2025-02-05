@@ -52,7 +52,6 @@ export const LoginForm = () => {
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        console.log(data)
         dispatch(loginSuccess(data));
         router.push('/dashboard');
       } else {

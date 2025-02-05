@@ -73,14 +73,12 @@ export const RegisterForm = () => {
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        console.log(data)
         dispatch(registerSuccess(data));
         router.push('/dashboard');
       } else {
         dispatch(registerFailure(data.message || 'Registration failed'));
       }
     } catch (err) {
-      console.log(err)
       dispatch(registerFailure('An error occurred during registration'));
     }
   };

@@ -44,7 +44,6 @@ export default function DashboardPage() {
     const state = useAppSelector((state) => state.auth);
     const [localDoctor, setLocalDoctor] = useState<any>(null);
     const [rightPanel, setRightPanel] = useState('list');
-    console.log(state);
     useEffect(() => {
         if (!token) {
             router.push('/login');
@@ -69,7 +68,6 @@ export default function DashboardPage() {
     }, [token]);
     const currentDoctor = localDoctor || doctor;
     if (!currentDoctor) return null;
-    console.log(rightPanel);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-rose-200 to-white p-6 pt-0">
@@ -77,7 +75,7 @@ export default function DashboardPage() {
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-7 gap-6">
                 <div className="md:col-span-2 bg-pink-100 text-black shadow-lg rounded-lg p-6">
                     <div className="flex flex-col items-center">
-                        <UserCircle size={100} className="text-gray-400 mb-4" />
+                        <UserCircle size={80} className="text-gray-400 mb-4" />
                         <h2 className="text-xl font-bold">{currentDoctor.name}</h2>
                         <p className="text-gray-600">{currentDoctor.specialization}</p>
 

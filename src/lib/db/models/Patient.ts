@@ -3,14 +3,21 @@ import mongoose, { Schema, Document, Types, Model } from 'mongoose';
 export interface IPatientData {
   name: string;
   age: number;
-  gender: 'male' | 'female' | 'other';
-  contact: string;
-  medicalHistory: string;
-  doctor: Types.ObjectId;
-  email?: string;
+  gender: string;
   phone?: string;
-  prescriptions: Types.ObjectId[];
-  reports: Types.ObjectId[];
+  weight?: number;
+  bloodGroup?: string;
+  knownAllergies?: string;
+  medicalHistory?: string;
+  currentMedication?: string;
+  reasonOfVisit?: string;
+  symptoms?: string;
+  diagnosis?: string;
+  prescribedMedication?: string;
+  nextVisit?: string;
+  doctor?: Types.ObjectId;
+  prescriptions?: Types.ObjectId[];
+  reports?: Types.ObjectId[];
 }
 
 export interface IPatient extends IPatientData, Document {
@@ -40,19 +47,45 @@ const PatientSchema = new Schema<IPatient>({
       required: [true, 'Please provide gender'],
       enum: ['male', 'female', 'other'],
   },
-  contact: {
-      type: String,
-      required: [true, 'Please provide contact information'],
-  },
-  email: {
-      type: String,
-      trim: true,
-  },
   phone: {
       type: String,
       trim: true,
   },
+  weight: {
+      type: Number,
+  },
+  bloodGroup: {
+      type: String,
+  },
+  knownAllergies: {
+      type: String,
+      default: '',
+  },
   medicalHistory: {
+      type: String,
+      default: '',
+  },
+  currentMedication: {
+      type: String,
+      default: '',
+  },
+  reasonOfVisit: {
+      type: String,
+      default: '',
+  },
+  symptoms: {
+      type: String,
+      default: '',
+  },
+  diagnosis: {
+      type: String,
+      default: '',
+  },
+  prescribedMedication: {
+      type: String,
+      default: '',
+  },
+  nextVisit: {
       type: String,
       default: '',
   },
@@ -79,10 +112,17 @@ PatientSchema.methods.toPatient = function() {
       name: this.name,
       age: this.age,
       gender: this.gender,
-      contact: this.contact,
-      email: this.email,
       phone: this.phone,
+      weight: this.weight,
+      bloodGroup: this.bloodGroup,
+      knownAllergies: this.knownAllergies,
       medicalHistory: this.medicalHistory,
+      currentMedication: this.currentMedication,
+      reasonOfVisit: this.reasonOfVisit,
+      symptoms: this.symptoms,
+      diagnosis: this.diagnosis,
+      prescribedMedication: this.prescribedMedication,
+      nextVisit: this.nextVisit,
       doctor: this.doctor.toString(),
       prescriptions: this.prescriptions.map((id: mongoose.Types.ObjectId) => id.toString()),
       reports: this.reports.map((id: mongoose.Types.ObjectId) => id.toString()),
