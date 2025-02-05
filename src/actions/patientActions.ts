@@ -3,6 +3,9 @@ import { Patient } from '@/types/patient';
 export const FETCH_PATIENTS_REQUEST = 'FETCH_PATIENTS_REQUEST';
 export const FETCH_PATIENTS_SUCCESS = 'FETCH_PATIENTS_SUCCESS';
 export const FETCH_PATIENTS_FAILURE = 'FETCH_PATIENTS_FAILURE';
+export const FETCH_PATIENT_REQUEST = 'FETCH_PATIENT_REQUEST';
+export const FETCH_PATIENT_SUCCESS = 'FETCH_PATIENT_SUCCESS';
+export const FETCH_PATIENT_FAILURE = 'FETCH_PATIENT_FAILURE';
 export const ADD_PATIENT_REQUEST = 'ADD_PATIENT_REQUEST';
 export const ADD_PATIENT_SUCCESS = 'ADD_PATIENT_SUCCESS';
 export const ADD_PATIENT_FAILURE = 'ADD_PATIENT_FAILURE';
@@ -25,6 +28,19 @@ interface FetchPatientsSuccessAction {
 
 interface FetchPatientsFailureAction {
     type: typeof FETCH_PATIENTS_FAILURE;
+    payload: string;
+}
+interface FetchPatientRequestAction {
+    type: typeof FETCH_PATIENT_REQUEST;
+}
+
+interface FetchPatientSuccessAction {
+    type: typeof FETCH_PATIENT_SUCCESS;
+    payload: Patient;
+}
+
+interface FetchPatientFailureAction {
+    type: typeof FETCH_PATIENT_FAILURE;
     payload: string;
 }
 
@@ -75,10 +91,14 @@ interface SelectPatientAction {
     payload: Patient;
 }
 
+
 export type PatientActionTypes =
     | FetchPatientsRequestAction
     | FetchPatientsSuccessAction
     | FetchPatientsFailureAction
+    | FetchPatientRequestAction
+    | FetchPatientSuccessAction
+    | FetchPatientFailureAction
     | AddPatientRequestAction
     | AddPatientSuccessAction
     | AddPatientFailureAction
@@ -88,7 +108,7 @@ export type PatientActionTypes =
     | DeletePatientRequestAction
     | DeletePatientSuccessAction
     | DeletePatientFailureAction
-    | SelectPatientAction;
+    | SelectPatientAction
 
 export const fetchPatientsRequest = (): FetchPatientsRequestAction => ({
     type: FETCH_PATIENTS_REQUEST
@@ -101,6 +121,19 @@ export const fetchPatientsSuccess = (patients: Patient[]): FetchPatientsSuccessA
 
 export const fetchPatientsFailure = (error: string): FetchPatientsFailureAction => ({
     type: FETCH_PATIENTS_FAILURE,
+    payload: error
+});
+export const fetchPatientRequest = (): FetchPatientRequestAction => ({
+    type: FETCH_PATIENT_REQUEST
+});
+
+export const fetchPatientSuccess = (patient: Patient): FetchPatientSuccessAction => ({
+    type: FETCH_PATIENT_SUCCESS,
+    payload: patient
+});
+
+export const fetchPatientFailure = (error: string): FetchPatientFailureAction => ({
+    type: FETCH_PATIENT_FAILURE,
     payload: error
 });
 

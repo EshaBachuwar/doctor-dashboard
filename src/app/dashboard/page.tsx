@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { Navbar } from '@/components/navbar/Navbar';
 import { Button } from '@/components/shared/Button';
-import Patient from '@/lib/db/models/Patient';
+import { Patient } from '@/components/patient/Patient';
 import { PatientList } from '@/components/patient/PatientList';
 import { AddPatient } from '@/components/patient/AddPatient';
 
@@ -44,6 +44,7 @@ export default function DashboardPage() {
     const state = useAppSelector((state) => state.auth);
     const [localDoctor, setLocalDoctor] = useState<any>(null);
     const [rightPanel, setRightPanel] = useState('list');
+    const [patientId, setPatientId] = useState('');
     useEffect(() => {
         if (!token) {
             router.push('/login');
@@ -108,8 +109,9 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="md:col-span-5 space-y-6">
-                    {rightPanel === 'list' && <PatientList setRightPanel={setRightPanel}/>}
+                    {rightPanel === 'list' && <PatientList setRightPanel={setRightPanel} setPatientId={setPatientId}/>}
                     {rightPanel === 'add' && <AddPatient setRightPanel={setRightPanel}/>}
+                    {rightPanel === 'view' && <Patient setRightPanel={setRightPanel} patientId={patientId}/>}
                 </div>
             </div>
         </div>

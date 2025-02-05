@@ -10,9 +10,9 @@ export async function GET(
 ) {
     try {
         await dbConnect();
-        const patientId = new Types.ObjectId(params.id);
+        const patientId = new Types.ObjectId(await params.id);
 
-        const patient = await Patient.findById(patientId).populate('prescriptions reports');
+        const patient = await Patient.findById(patientId)
 
         if (!patient) {
             return NextResponse.json(

@@ -6,9 +6,10 @@ import { AppDispatch, RootState, store } from '@/store';
 import { fetchPatients } from '@/actions/patientThunks';
 interface PatientListProps {
     setRightPanel: (panel: string) => void;
+    setPatientId: (panel: string) => void;
 }
 
-export const PatientList: React.FC<PatientListProps> = ({ setRightPanel }) => {
+export const PatientList: React.FC<PatientListProps> = ({ setRightPanel,setPatientId }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { patients, loading, error } = useSelector((state: RootState) => state.patients);
     const doctorId = store.getState().auth.doctor?.id || '';
@@ -18,6 +19,12 @@ export const PatientList: React.FC<PatientListProps> = ({ setRightPanel }) => {
     }, [dispatch, doctorId]);
     const handleAddPatient = () => {
         setRightPanel('add');
+    }
+    const handleViewPatient = (e: React.MouseEvent<HTMLButtonElement>, patientId: string) => {
+        e.preventDefault();
+        console.log('uhfije');
+        setPatientId(patientId);
+        setRightPanel('view');
     }
     return (
         <div className="bg-pink-100 text-black shadow-md rounded-lg p-6">
@@ -40,9 +47,9 @@ export const PatientList: React.FC<PatientListProps> = ({ setRightPanel }) => {
                                 <td>{patient.name}</td>
                                 <td>{patient.age}</td>
                                 <td>
-                                    <button className="text-rose-600 px-2 py-1 rounded-md">
+                                    <Button variant="outline" onClick={(e) => handleViewPatient(e, patient.id)}>
                                         View
-                                    </button>
+                                    </Button>
                                 </td>
                             </tr>
                         ))}
