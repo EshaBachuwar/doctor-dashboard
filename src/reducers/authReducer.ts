@@ -14,7 +14,7 @@ import {
 
 const initialState: AuthState = {
     doctor: null,
-    token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
+    token:  null,
     loading: false,
     error: null
 };

@@ -22,7 +22,6 @@ export const PatientList: React.FC<PatientListProps> = ({ setRightPanel,setPatie
     }
     const handleViewPatient = (e: React.MouseEvent<HTMLButtonElement>, patientId: string) => {
         e.preventDefault();
-        console.log('uhfije');
         setPatientId(patientId);
         setRightPanel('view');
     }
