@@ -44,7 +44,7 @@ export default function DashboardPage() {
     const state = useAppSelector((state) => state.auth);
     const [localDoctor, setLocalDoctor] = useState<any>(null);
     const [rightPanel, setRightPanel] = useState('list');
-
+    console.log(state);
     useEffect(() => {
         if (!token) {
             router.push('/login');

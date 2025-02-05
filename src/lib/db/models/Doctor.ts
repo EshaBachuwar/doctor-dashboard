@@ -6,6 +6,8 @@ export interface IDoctor extends Document {
     email: string;
     password: string;
     specialization: string;
+    age:Number;
+    phone:Number;
     patients: mongoose.Types.ObjectId[];
     createdAt: Date;
     updatedAt: Date;
@@ -33,6 +35,13 @@ const DoctorSchema = new Schema({
     specialization: {
         type: String,
         required: [true, 'Please provide a specialization'],
+    },
+    age: {
+        type: Number,
+    },
+    phone: {
+        type: Number,
+        required: [true, 'Please provide a Phone Number'],
     },
     patients: [{
         type: Schema.Types.ObjectId,

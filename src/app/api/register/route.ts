@@ -7,7 +7,7 @@ export async function POST(request: Request) {
         await dbConnect();
         const body = await request.json();
         const { name, age, gender,phone, specialization, email, password } = body;
-        if (!name || !email || !password || !specialization) {
+        if (!name || !email || !password || !specialization || !phone) {
             return NextResponse.json(
                 { message: 'Please provide all required fields' },
                 { status: 400 }
@@ -22,9 +22,9 @@ export async function POST(request: Request) {
         }
         doctor = new Doctor({
             name,
-            age: age ? parseInt(age) : null,
+            age: age ? Number(age) : null,
             gender,
-            phone,
+            phone: phone ? Number(phone) : null,
             specialization,
             email,
             password

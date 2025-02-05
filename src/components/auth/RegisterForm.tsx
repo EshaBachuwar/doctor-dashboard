@@ -60,9 +60,9 @@ export const RegisterForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
-          // age: formData.age ? parseInt(formData.age) : null,
+          age: formData.age ? Number(formData.age) : null,
           gender: formData.gender,
-          // phone: formData.phone,
+          phone: formData.phone ? Number(formData.phone) : null,
           specialization: formData.specialization,
           email: formData.email,
           password: formData.password,
