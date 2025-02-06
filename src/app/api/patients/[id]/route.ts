@@ -4,15 +4,13 @@ import { Types } from 'mongoose';
 import dbConnect from '@/lib/db/connect';
 import Patient from '@/lib/db/models/Patient';
 import Doctor from '@/lib/db/models/Doctor';
-type Props = {
-    params: {
-        id: string
-    }
+interface RequestContext {
+    params: { id: string };
 }
 
 export async function GET(
     req: NextRequest,
-    context: { params: { id: string } }
+    context: RequestContext
 ) {
     try {
         await dbConnect();
@@ -45,7 +43,7 @@ export async function GET(
 
 export async function PUT(
     req: NextRequest,
-    context: { params: { id: string } }
+    context: RequestContext
 ) {
     try {
         await dbConnect();
@@ -76,7 +74,7 @@ export async function PUT(
 
 export async function DELETE(
     req: NextRequest,
-    context: { params: { id: string } }
+    context: RequestContext
 ) {
     try {
         await dbConnect();
