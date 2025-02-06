@@ -12,11 +12,11 @@ type Props = {
 
 export async function GET(
     req: NextRequest,
-    props: Props
+    context: { params: { id: string } }
 ) {
     try {
         await dbConnect();
-        const patientId = new Types.ObjectId(props.params.id);
+        const patientId = new Types.ObjectId(context.params.id);
 
         const patient = await Patient.findById(patientId)
 
@@ -45,11 +45,11 @@ export async function GET(
 
 export async function PUT(
     req: NextRequest,
-    props: Props
+    context: { params: { id: string } }
 ) {
     try {
         await dbConnect();
-        const patientId = new Types.ObjectId(props.params.id);
+        const patientId = new Types.ObjectId(context.params.id);
         const data = await req.json();
 
         const patient = await Patient.findById(patientId);
@@ -76,11 +76,11 @@ export async function PUT(
 
 export async function DELETE(
     req: NextRequest,
-    props: Props
+    context: { params: { id: string } }
 ) {
     try {
         await dbConnect();
-        const patientId = new Types.ObjectId(props.params.id);
+        const patientId = new Types.ObjectId(context.params.id);
 
         const patient = await Patient.findByIdAndDelete(patientId);
 
