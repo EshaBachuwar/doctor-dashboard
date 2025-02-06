@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Types } from 'mongoose';
 import dbConnect from '@/lib/db/connect';
 import Patient from '@/lib/db/models/Patient';
+import Doctor from '@/lib/db/models/Doctor';
 
 export async function GET(
     req: NextRequest,
@@ -84,12 +85,25 @@ export async function DELETE(
                 { status: 404 }
             );
         }
+        const doctorId = patient.doctor;
+        await Doctor.findByIdAndUpdate(
+            doctorId,
+            {
+                $pull: { patients: patientId }
+            }
+        );
 
         return NextResponse.json(
             { message: 'Patient deleted successfully' },
             { status: 200 }
         );
     } catch (error) {
+        if (error instanceof Error && error.name === 'BSONError') {
+            return NextResponse.json(
+                { error: 'Invalid patient ID format' },
+                { status: 400 }
+            );
+        }
         console.error('Error deleting patient:', error);
         return NextResponse.json(
             { error: 'Internal Server Error' },

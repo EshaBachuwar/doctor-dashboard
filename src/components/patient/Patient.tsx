@@ -22,7 +22,7 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
         setRightPanel('list');
     }
     const handleEdit = () => {
-        // setRightPanel('edit');
+        setRightPanel('edit');
     }
     console.log(selectedPatient);
     return (
@@ -85,7 +85,7 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
                 </div>
                 <div className="mt-4">
                     <div>
-                        <label className="text-gray-600">Prescribed Medication : </label>
+                        <label className="text-gray-600">Prescribed Medications : </label>
                         <div className="mt-2">
                             <Medications medications={selectedPatient?.prescribedMedication} />
                         </div>

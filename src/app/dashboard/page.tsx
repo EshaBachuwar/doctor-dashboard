@@ -16,6 +16,7 @@ import { Button } from '@/components/shared/Button';
 import { Patient } from '@/components/patient/Patient';
 import { PatientList } from '@/components/patient/PatientList';
 import { AddPatient } from '@/components/patient/AddPatient';
+import { EditPatient } from '@/components/patient/EditPatient';
 
 const DashboardStats = [
     {
@@ -112,6 +113,7 @@ export default function DashboardPage() {
                     {rightPanel === 'list' && <PatientList setRightPanel={setRightPanel} setPatientId={setPatientId}/>}
                     {rightPanel === 'add' && <AddPatient setRightPanel={setRightPanel}/>}
                     {rightPanel === 'view' && <Patient setRightPanel={setRightPanel} patientId={patientId}/>}
+                    {rightPanel === 'edit' && <EditPatient setRightPanel={setRightPanel} patientid={patientId}/>}
                 </div>
             </div>
         </div>
