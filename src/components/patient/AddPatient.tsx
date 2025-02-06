@@ -83,6 +83,30 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
             (med.timing.morning || med.timing.afternoon || med.timing.night)
         );
     };
+    const getDateInputValue = () => {
+        if (!formData.nextVisit) return '';
+        const parts = formData.nextVisit.split('/');
+        if (parts.length === 3) {
+            return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+        }
+        return '';
+    };
+    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const date = e.target.value;
+        if (date) {
+            const dateObj = new Date(date);
+
+            const day = dateObj.getDate().toString().padStart(2, '0');
+            const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+            const year = dateObj.getFullYear();
+
+            const formattedDate = `${day}/${month}/${year}`;
+
+            setFormData({ ...formData, nextVisit: formattedDate });
+        } else {
+            setFormData({ ...formData, nextVisit: '' });
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -274,9 +298,9 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                         </Button>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-3 mb-4">
                         {medications.map((medication, index) => (
-                            <div key={index} className="p-4">
+                            <div key={index} className="p-4 shadow-md mb-2 rounded-lg">
                                 <div className="flex items-start gap-4 mb-2">
                                     <div className="flex-1">
                                         <label className="mx-1 text-sm font-medium text-gray-700 mb-1">
@@ -338,19 +362,20 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                             </div>
                         ))}
                     </div>
-                    {/* <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
-
-                        <div className='md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
-                            <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">Next Visit :</label>
+                    <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
+                            <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                                Next Visit:
+                            </label>
                             <input
-                                type="text"
-                                value={formData.nextVisit}
-                                onChange={(e) => setFormData({ ...formData, nextVisit: e.target.value })}
-                                required
-                                className="ml-1  md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                type="date"
+                                value={getDateInputValue()}
+                                onChange={handleDateChange}
+                                min={new Date().toISOString().split('T')[0]} // Prevents selecting past dates
+                                className="ml-1 md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
-                    </div> */}
+                    </div>
                     <div className='flex justify-center'>
                         <Button className="mt-4 w-[40%]">Add Patient</Button>
                     </div>
