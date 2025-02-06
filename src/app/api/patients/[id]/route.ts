@@ -4,17 +4,19 @@ import { Types } from 'mongoose';
 import dbConnect from '@/lib/db/connect';
 import Patient from '@/lib/db/models/Patient';
 import Doctor from '@/lib/db/models/Doctor';
-interface RequestContext {
-    params: { id: string };
+type Props = {
+    params: {
+        id: string
+    }
 }
 
 export async function GET(
     req: NextRequest,
-    context: RequestContext
+    { params }: { params: Record<string, string> }
 ) {
     try {
         await dbConnect();
-        const patientId = new Types.ObjectId(context.params.id);
+        const patientId = new Types.ObjectId(params.id);
 
         const patient = await Patient.findById(patientId)
 
@@ -43,11 +45,11 @@ export async function GET(
 
 export async function PUT(
     req: NextRequest,
-    context: RequestContext
+    { params }: { params: Record<string, string> }
 ) {
     try {
         await dbConnect();
-        const patientId = new Types.ObjectId(context.params.id);
+        const patientId = new Types.ObjectId(params.id);
         const data = await req.json();
 
         const patient = await Patient.findById(patientId);
@@ -74,11 +76,11 @@ export async function PUT(
 
 export async function DELETE(
     req: NextRequest,
-    context: RequestContext
+    { params }: { params: Record<string, string> }
 ) {
     try {
         await dbConnect();
-        const patientId = new Types.ObjectId(context.params.id);
+        const patientId = new Types.ObjectId(params.id);
 
         const patient = await Patient.findByIdAndDelete(patientId);
 
