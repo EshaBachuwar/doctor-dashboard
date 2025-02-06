@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addPatient, fetchPatientById } from '@/actions/patientThunks';
 import { AppDispatch, store, useAppSelector } from '@/store';
 import { log } from 'util';
+import { Medications } from './Medications';
 interface PatientProps {
     setRightPanel: (panel: string) => void;
     patientId: string;
@@ -25,7 +26,7 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
     }
     console.log(selectedPatient);
     return (
-        <div className=" bg-pink-100 text-black shadow-lg rounded-lg p-6">
+        <div className=" bg-pink-100 text-black shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl">
             <div className="flex justify-end gap-2">
                 <Button variant="outline" onClick={handleEdit}>Edit</Button>
                 <Button variant="outline" onClick={handleOnClose}>Close</Button>
@@ -82,10 +83,12 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
                         <span>{selectedPatient?.diagnosis}</span>
                     </div>
                 </div>
-                <div className=" mt-4">
+                <div className="mt-4">
                     <div>
-                        <label className="text-gray-600">Prescribed Mediacation : </label>
-                        <span>{selectedPatient?.prescribedMedication}</span>
+                        <label className="text-gray-600">Prescribed Medication : </label>
+                        <div className="mt-2">
+                            <Medications medications={selectedPatient?.prescribedMedication} />
+                        </div>
                     </div>
                 </div>
                 <div className=" mt-4">

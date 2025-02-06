@@ -10,7 +10,7 @@ export async function GET(
 ) {
     try {
         await dbConnect();
-        const patientId = new Types.ObjectId(await params.id);
+        const patientId = new Types.ObjectId(params.id);
 
         const patient = await Patient.findById(patientId)
 
@@ -23,6 +23,12 @@ export async function GET(
 
         return NextResponse.json(patient.toPatient());
     } catch (error) {
+        if (error instanceof Error && error.name === 'BSONError') {
+            return NextResponse.json(
+                { error: 'Invalid patient ID format' },
+                { status: 400 }
+            );
+        }
         console.error('Error fetching patient:', error);
         return NextResponse.json(
             { error: 'Internal Server Error' },

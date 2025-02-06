@@ -1,3 +1,14 @@
+export interface MedicationTiming {
+    morning: boolean;
+    afternoon: boolean;
+    night: boolean;
+  }
+
+  export interface Medication {
+    name: string;
+    timing: MedicationTiming;
+  }
+
 export interface Patient {
     id: string;
     name: string;
@@ -12,10 +23,9 @@ export interface Patient {
     reasonOfVisit?: string;
     symptoms?: string;
     diagnosis?: string;
-    prescribedMedication?: string;
+    prescribedMedication?: Medication[];
     nextVisit?: string;
     doctor?: string;
-    prescriptions?: string[];
     reports?: string[];
     createdAt: string;
     updatedAt: string;

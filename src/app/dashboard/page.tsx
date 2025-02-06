@@ -71,10 +71,10 @@ export default function DashboardPage() {
     if (!currentDoctor) return null;
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-rose-200 to-white p-6 pt-0">
+        <div className="h-max bg-gradient-to-b from-rose-200 to-white p-6 pt-0">
             <Navbar />
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-7 gap-6">
-                <div className="md:col-span-2 bg-pink-100 text-black shadow-lg rounded-lg p-6">
+            <div className=" h-[100%] mx-auto grid grid-cols-1 md:grid-cols-7 gap-6">
+                <div className="  h-[100%] md:col-span-2 bg-pink-100 text-black shadow-lg rounded-lg p-6">
                     <div className="flex flex-col items-center">
                         <UserCircle size={80} className="text-gray-400 mb-4" />
                         <h2 className="text-xl font-bold">{currentDoctor.name}</h2>
@@ -108,7 +108,7 @@ export default function DashboardPage() {
                     </div>
                 </div>
 
-                <div className="md:col-span-5 space-y-6">
+                <div className="md:col-span-5 space-y-6 max-h-screen">
                     {rightPanel === 'list' && <PatientList setRightPanel={setRightPanel} setPatientId={setPatientId}/>}
                     {rightPanel === 'add' && <AddPatient setRightPanel={setRightPanel}/>}
                     {rightPanel === 'view' && <Patient setRightPanel={setRightPanel} patientId={patientId}/>}

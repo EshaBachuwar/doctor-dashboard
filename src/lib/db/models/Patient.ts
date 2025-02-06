@@ -1,4 +1,13 @@
 import mongoose, { Schema, Document, Types, Model } from 'mongoose';
+interface IMedicationTiming {
+    morning: boolean;
+    afternoon: boolean;
+    night: boolean;
+  }
+  interface IMedication {
+    name: string;
+    timing: IMedicationTiming;
+  }
 
 export interface IPatientData {
   name: string;
@@ -13,10 +22,9 @@ export interface IPatientData {
   reasonOfVisit?: string;
   symptoms?: string;
   diagnosis?: string;
-  prescribedMedication?: string;
+  prescribedMedication?: IMedication[];
   nextVisit?: string;
   doctor?: Types.ObjectId;
-  prescriptions?: Types.ObjectId[];
   reports?: Types.ObjectId[];
 }
 
@@ -24,13 +32,37 @@ export interface IPatient extends IPatientData, Document {
   createdAt: Date;
   updatedAt: Date;
   toPatient(): object;
-  addPrescription(prescriptionId: mongoose.Types.ObjectId): void;
   addReport(reportId: mongoose.Types.ObjectId): void;
 }
 
 export interface IPatientModel extends Model<IPatient> {
   findByDoctor(doctorId: mongoose.Types.ObjectId): Promise<IPatient[]>;
 }
+const MedicationTimingSchema = new Schema<IMedicationTiming>({
+    morning: {
+      type: Boolean,
+      default: false
+    },
+    afternoon: {
+      type: Boolean,
+      default: false
+    },
+    night: {
+      type: Boolean,
+      default: false
+    }
+  }, { _id: false });
+  const MedicationSchema = new Schema<IMedication>({
+    name: {
+      type: String,
+      required: [true, 'Please provide medication name'],
+      trim: true
+    },
+    timing: {
+      type: MedicationTimingSchema,
+      required: [true, 'Please provide medication timing']
+    }
+  }, { _id: false });
 
 const PatientSchema = new Schema<IPatient>({
   name: {
@@ -82,8 +114,8 @@ const PatientSchema = new Schema<IPatient>({
       default: '',
   },
   prescribedMedication: {
-      type: String,
-      default: '',
+    type: [MedicationSchema],
+    default: []
   },
   nextVisit: {
       type: String,
@@ -94,10 +126,6 @@ const PatientSchema = new Schema<IPatient>({
       ref: 'Doctor',
       required: true,
   },
-  prescriptions: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Prescription'
-  }],
   reports: [{
       type: Schema.Types.ObjectId,
       ref: 'Report'
@@ -124,18 +152,12 @@ PatientSchema.methods.toPatient = function() {
       prescribedMedication: this.prescribedMedication,
       nextVisit: this.nextVisit,
       doctor: this.doctor.toString(),
-      prescriptions: this.prescriptions.map((id: mongoose.Types.ObjectId) => id.toString()),
       reports: this.reports.map((id: mongoose.Types.ObjectId) => id.toString()),
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString()
   };
 };
 
-PatientSchema.methods.addPrescription = function(prescriptionId: mongoose.Types.ObjectId) {
-  if (!this.prescriptions.includes(prescriptionId)) {
-      this.prescriptions.push(prescriptionId);
-  }
-};
 
 PatientSchema.methods.addReport = function(reportId: mongoose.Types.ObjectId) {
   if (!this.reports.includes(reportId)) {
