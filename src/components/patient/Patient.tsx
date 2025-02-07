@@ -46,7 +46,7 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
                 <Button variant="outline" onClick={handleEdit}>Edit</Button>
                 <Button variant="outline" onClick={handleOnClose}>Close</Button>
             </div>
-            <div className='gap-3'>
+            <div className='gap-3 m-2'>
                 <h2 className="text-2xl font-bold">Patient Details</h2>
                 <div className="grid grid-cols-5 gap-4 mt-4">
                     <div>

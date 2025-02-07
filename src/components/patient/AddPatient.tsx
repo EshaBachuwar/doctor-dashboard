@@ -141,13 +141,12 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
 
     return (
         <div className="flex flex-col max-h-[88%] overflow-y-auto max-w-4xl mx-auto p-6 bg-pink-100 rounded-lg shadow-lg">
-            <div className=''>
-                <div className='grid grid-cols-9 m-2'>
-
-                    <h1 className="text-2xl font-semibold mb-6 text-center text-black md:col-span-8">Add New Patient</h1>
-                    <Button variant="outline" onClick={handleOnClose} className='md:col-span-1 h-10'>Close</Button>
-                </div>
+             <div className="flex justify-end gap-2">
+                    <Button variant="outline" onClick={handleOnClose} className='md:col-span-1'>Close</Button>
             </div>
+                <div className='grid grid-cols-9 m-2'>
+                    <h1 className="text-2xl font-semibold mb-6 text-center text-black md:col-span-8">Add New Patient</h1>
+                </div>
             <div className='flex-1 px-6'>
                 <form onSubmit={handleSubmit} className='text-gray-700 '>
                     <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -301,8 +300,8 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                     <div className="space-y-3 mb-4">
                         {medications.map((medication, index) => (
                             <div key={index} className="p-4 shadow-md mb-2 rounded-lg">
-                                <div className="flex items-start gap-4 mb-2">
-                                    <div className="flex-1">
+                                <div className="flex items-start gap-4 mb-2 w-full">
+                                    <div className="flex-1 w-full">
                                         <label className="mx-1 text-sm font-medium text-gray-700 mb-1">
                                             Medicine Name :
                                         </label>
@@ -310,7 +309,7 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                                             type="text"
                                             value={medication.name}
                                             onChange={(e) => handleMedicationChange(index, 'name', e.target.value)}
-                                            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                                             placeholder="Enter medicine name"
                                         />
                                     </div>
