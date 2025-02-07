@@ -6,6 +6,8 @@ import { addPatient, fetchPatientById } from '@/actions/patientThunks';
 import { AppDispatch, store, useAppSelector } from '@/store';
 import { log } from 'util';
 import { Medications } from './Medications';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PatientPDF } from './PatientPDF';
 interface PatientProps {
     setRightPanel: (panel: string) => void;
     patientId: string;
@@ -28,6 +30,18 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
     return (
         <div className=" bg-pink-100 text-black shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl">
             <div className="flex justify-end gap-2">
+            {selectedPatient && (
+                    <PDFDownloadLink
+                        document={<PatientPDF patient={selectedPatient} />}
+                        fileName={`patient-${selectedPatient.name}-${patientId}.pdf`}
+                    >
+                        {({ loading }) => (
+                            <Button variant="outline" disabled={loading}>
+                                {loading ? 'Generating PDF...' : 'Download PDF'}
+                            </Button>
+                        )}
+                    </PDFDownloadLink>
+                )}
                 <Button variant="outline" onClick={handleEdit}>Edit</Button>
                 <Button variant="outline" onClick={handleOnClose}>Close</Button>
             </div>
