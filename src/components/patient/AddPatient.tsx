@@ -371,7 +371,7 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                                 type="date"
                                 value={getDateInputValue()}
                                 onChange={handleDateChange}
-                                min={new Date().toISOString().split('T')[0]} // Prevents selecting past dates
+                                min={new Date().toISOString().split('T')[0]}  
                                 className="ml-1 md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>

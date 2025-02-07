@@ -19,10 +19,6 @@ export async function GET(request: Request) {
             const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
 
             const doctor = await Doctor.findById(decoded.id)
-                // .populate({
-                //     path: 'patients',
-                //     select: 'name email'
-                // });
 
             if (!doctor) {
                 return NextResponse.json({ message: 'Doctor not found' }, { status: 404 });
@@ -33,7 +29,6 @@ export async function GET(request: Request) {
                 name: doctor.name,
                 email: doctor.email,
                 specialization: doctor.specialization,
-                // patients: doctor.patients,
                 createdAt: doctor.createdAt,
                 updatedAt: doctor.updatedAt
             };

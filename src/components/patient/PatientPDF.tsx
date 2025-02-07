@@ -2,7 +2,6 @@ import { Patient } from '@/types/patient';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import React from 'react';
 
-// Define PDF styles
 const styles = StyleSheet.create({
     page: {
         padding: 30,
