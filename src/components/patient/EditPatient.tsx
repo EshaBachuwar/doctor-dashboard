@@ -161,10 +161,11 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
     return (
         <div className=" bg-pink-100 text-black shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl">
             <div className=''>
+                <div className="flex justify-end gap-2">
+                    <Button variant="outline" onClick={handleOnClose} className='md:col-span-1'>Close</Button>
+                </div>
                 <div className='grid grid-cols-9 m-2'>
-
                     <h1 className="text-2xl font-semibold mb-6 text-center text-black md:col-span-8">Edit Patient</h1>
-                    <Button variant="outline" onClick={handleOnClose} className='md:col-span-1 h-10 w-20'>Close</Button>
                 </div>
                 <div>
                     <form onSubmit={handleSubmit} className='text-gray-700 '>
@@ -379,7 +380,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
                                     type="date"
                                     value={getDateInputValue()}
                                     onChange={handleDateChange}
-                                    min={new Date().toISOString().split('T')[0]} 
+                                    min={new Date().toISOString().split('T')[0]}
                                     className="ml-1 md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
