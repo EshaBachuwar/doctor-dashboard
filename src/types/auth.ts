@@ -3,7 +3,7 @@ export interface Doctor {
     name: string;
     age: number;
     gender: string;
-    phone: Number;
+    phone: string;
     specialization: string;
     email: string;
 }

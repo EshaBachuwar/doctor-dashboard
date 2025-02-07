@@ -8,11 +8,9 @@ export async function POST(request: Request) {
     try {
         await dbConnect();
 
-        // Parse request body
         const body = await request.json();
         const { email, password } = body;
 
-        // Validate input
         if (!email || !password) {
             return NextResponse.json(
                 { message: 'Please provide email and password' },
@@ -20,7 +18,6 @@ export async function POST(request: Request) {
             );
         }
 
-        // Find doctor by email
         const doctor = await Doctor.findOne({ email }).select('+password');
         if (!doctor) {
             return NextResponse.json(
@@ -29,7 +26,6 @@ export async function POST(request: Request) {
             );
         }
 
-        // Verify password
         const isMatch = await bcrypt.compare(password, doctor.password);
         if (!isMatch) {
             return NextResponse.json(
@@ -38,20 +34,19 @@ export async function POST(request: Request) {
             );
         }
 
-        // Generate JWT token
         const token = jwt.sign(
             { id: doctor._id },
             process.env.JWT_SECRET!,
             { expiresIn: '1d' }
         );
 
-        // Return response without password
         return NextResponse.json({
             token,
             doctor: {
                 id: doctor._id,
                 name: doctor.name,
                 age: doctor.age,
+                phone: doctor.phone,
                 gender: doctor.gender,
                 email: doctor.email,
                 specialization: doctor.specialization

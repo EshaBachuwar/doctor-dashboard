@@ -24,7 +24,7 @@ export async function POST(request: Request) {
             name,
             age: age ? Number(age) : null,
             gender,
-            phone: phone ? Number(phone) : null,
+            phone,
             specialization,
             email,
             password

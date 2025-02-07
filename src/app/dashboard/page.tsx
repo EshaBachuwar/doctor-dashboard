@@ -68,7 +68,7 @@ export default function DashboardPage() {
             fetchDoctorProfile();
         }
     }, [token]);
-    const currentDoctor = localDoctor || doctor;
+    const currentDoctor = doctor;
     if (!currentDoctor) return null;
 
     return (
