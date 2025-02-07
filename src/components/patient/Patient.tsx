@@ -8,6 +8,7 @@ import { log } from 'util';
 import { Medications } from './Medications';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { PatientPDF } from './PatientPDF';
+import { Download, Loader } from 'lucide-react';
 interface PatientProps {
     setRightPanel: (panel: string) => void;
     patientId: string;
@@ -37,7 +38,7 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
                     >
                         {({ loading }) => (
                             <Button variant="outline" disabled={loading}>
-                                {loading ? 'Generating PDF...' : 'Download PDF'}
+                                {loading ? <Loader /> : <div className='flex gap-2 p-0'><Download /> Prescription</div>}
                             </Button>
                         )}
                     </PDFDownloadLink>
