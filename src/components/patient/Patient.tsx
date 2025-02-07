@@ -16,7 +16,6 @@ interface PatientProps {
 export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) => {
     const dispatch = useDispatch<AppDispatch>();
     const selectedPatient = useAppSelector((state) => state.patients.selectedPatient);
-    console.log(patientId);
     useEffect(() => {
         if (patientId)
             dispatch(fetchPatientById(patientId));
@@ -27,7 +26,6 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
     const handleEdit = () => {
         setRightPanel('edit');
     }
-    console.log(selectedPatient);
     return (
         <div className=" bg-pink-100 text-black shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl">
             <div className="flex justify-end gap-2">

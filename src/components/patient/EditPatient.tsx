@@ -311,7 +311,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
                             {medications.map((medication, index) => (
                                 <div key={index} className="p-4 shadow-md mb-2 rounded-lg">
                                     <div className="flex items-start gap-4 mb-2">
-                                        <div className="flex-1">
+                                        <div className="flex-1 w-full">
                                             <label className="mx-1 text-sm font-medium text-gray-700 mb-1">
                                                 Medicine Name :
                                             </label>
@@ -319,7 +319,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
                                                 type="text"
                                                 value={medication.name}
                                                 onChange={(e) => handleMedicationChange(index, 'name', e.target.value)}
-                                                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                className="px-4 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                 placeholder="Enter medicine name"
                                             />
                                         </div>
