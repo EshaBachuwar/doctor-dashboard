@@ -8,6 +8,14 @@ export interface MedicationTiming {
     name: string;
     timing: MedicationTiming;
   }
+  export interface Report {
+    id: string;
+    patientId: string;
+    doctorId: string;
+    fileName: string;
+    fileUrl: string;
+    uploadDate: Date;
+}
 
 export interface Patient {
     id: string;
@@ -26,7 +34,7 @@ export interface Patient {
     prescribedMedication?: Medication[];
     nextVisit?: string;
     doctor?: string;
-    reports?: string[];
+    reports?: Report[];
     createdAt: string;
     updatedAt: string;
 }

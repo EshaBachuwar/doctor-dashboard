@@ -74,7 +74,7 @@ export default function DashboardPage() {
   return (
     <div className="h-max bg-gradient-to-b from-rose-200 to-white p-6 pt-0">
       <Navbar />
-      <div className=" h-[100vh] mx-auto grid grid-cols-1 md:grid-cols-7 gap-6">
+      <div className=" h-max mx-auto grid grid-cols-1 md:grid-cols-7 gap-6">
         <div className="  h-[100%] md:col-span-2 bg-pink-100 text-black shadow-lg rounded-lg p-6">
           <div className="flex flex-col items-center">
             <UserCircle size={80} className="text-gray-400 mb-4" />

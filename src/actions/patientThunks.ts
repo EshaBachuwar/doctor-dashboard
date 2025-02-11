@@ -69,18 +69,41 @@ export const addPatient = (patientData: Omit<Patient, 'id'>) => async (dispatch:
         dispatch(addPatientFailure(error instanceof Error ? error.message : 'Unexpected error'));
     }
 };
-
-export const updatePatient = (patient: Patient) => async (dispatch: AppDispatch) => {
+interface UpdatePatientPayload {
+    patient: Patient;
+    reportFile?: File;
+}
+export const updatePatient = ({ patient, reportFile }: UpdatePatientPayload) => async (dispatch: AppDispatch) => {
     dispatch(updatePatientRequest());
     try {
-        const response = await fetch(`/api/patients/${patient.id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(patient),
-        });
-
-        if (!response.ok) throw new Error(`Error ${response.status}: Failed to update patient`);
-
+        let response;
+        if(reportFile){
+            const formData = new FormData();
+            formData.append('file', reportFile);
+            Object.entries(patient).forEach(([key, value]) => {
+                if (value !== undefined) {
+                    if (typeof value === 'object') {
+                        formData.append(key, JSON.stringify(value));
+                    } else {
+                        formData.append(key, value.toString());
+                    }
+                }
+            });
+            response = await fetch(`/api/patients/${patient.id}`, {
+                method: 'PUT',
+                body: formData,
+            });
+        } else {
+            response = await fetch(`/api/patients/${patient.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(patient),
+            });
+        }
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Error ${response.status}: Failed to update patient`);
+        }
         const data = await response.json();
         dispatch(updatePatientSuccess(data));
     } catch (error) {

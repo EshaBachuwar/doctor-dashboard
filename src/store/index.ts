@@ -49,8 +49,10 @@ export function setupStore(preloadedState?: Partial<RootState>) {
         preloadedState as any,
         enhancer
     );
-    const persistor = persistStore(store as any);
-    return { store, persistor };
+    let persistor = null;
+    if (typeof window !== "undefined") {
+        persistor = persistStore(store as any);
+    }    return { store, persistor };
 }
 
 export const { store, persistor } = setupStore();

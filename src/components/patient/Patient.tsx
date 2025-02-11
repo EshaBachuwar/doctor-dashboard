@@ -107,7 +107,13 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
                 <div className=" mt-4">
                     <div>
                         <label className="text-gray-600">Reports : </label>
-                        <span></span>
+                        <div>
+                            {selectedPatient?.reports?.map((report, index) => (
+                                <div key={index} className="mt-2">
+                                    <a href={report.fileUrl} target="_blank" rel="noreferrer" className="text-blue-500 underline">{report.fileName}</a>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,13 @@ interface IMedicationTiming {
     name: string;
     timing: IMedicationTiming;
   }
-
+  export interface IReport {
+    patientId: Types.ObjectId;
+    doctorId: Types.ObjectId | string |undefined;
+    fileName: string;
+    fileUrl: string;
+    createdAt: Date;
+}
 export interface IPatientData {
   name: string;
   age: number;
@@ -25,14 +31,14 @@ export interface IPatientData {
   prescribedMedication?: IMedication[];
   nextVisit?: string;
   doctor?: Types.ObjectId;
-  reports?: Types.ObjectId[];
+  reports?: IReport[];
 }
 
 export interface IPatient extends IPatientData, Document {
   createdAt: Date;
   updatedAt: Date;
   toPatient(): object;
-  addReport(reportId: mongoose.Types.ObjectId): void;
+  addReport(report:IReport): void;
 }
 
 export interface IPatientModel extends Model<IPatient> {
@@ -63,6 +69,24 @@ const MedicationTimingSchema = new Schema<IMedicationTiming>({
       required: [true, 'Please provide medication timing']
     }
   }, { _id: false });
+  const ReportSchema = new Schema<IReport>({
+    patientId: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
+    doctorId: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
+    fileName: {
+      type: String,
+      required: [true, 'Please provide a file name']
+    },
+    fileUrl: {
+      type: String,
+      required: [true, 'Please provide a file url']
+    }
+  }, { timestamps: true, _id: false });
 
 const PatientSchema = new Schema<IPatient>({
   name: {
@@ -127,8 +151,8 @@ const PatientSchema = new Schema<IPatient>({
       required: true,
   },
   reports: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Report'
+      type: [ReportSchema],
+      default: [],
   }]
 }, {
   timestamps: true
@@ -152,17 +176,18 @@ PatientSchema.methods.toPatient = function() {
       prescribedMedication: this.prescribedMedication,
       nextVisit: this.nextVisit,
       doctor: this.doctor.toString(),
-      reports: this.reports.map((id: mongoose.Types.ObjectId) => id.toString()),
+      reports: this.reports,
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString()
   };
 };
 
 
-PatientSchema.methods.addReport = function(reportId: mongoose.Types.ObjectId) {
-  if (!this.reports.includes(reportId)) {
-      this.reports.push(reportId);
+PatientSchema.methods.addReport = function(report: IReport) {
+  if(!this.reports) {
+      this.reports = [];
   }
+  this.reports.push(report);
 };
 
 PatientSchema.statics.findByDoctor = function(doctorId: mongoose.Types.ObjectId) {

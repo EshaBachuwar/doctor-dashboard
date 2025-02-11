@@ -21,6 +21,7 @@ interface Medication {
         night: boolean;
     };
 }
+
 export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patientid }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [medications, setMedications] = useState<Medication[]>(store.getState().patients.selectedPatient?.prescribedMedication || [{
@@ -31,6 +32,8 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
             night: false
         }
     }]);
+    const [reportFile, setReportFile] = useState<File | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const [initialFormData, setInitialFormData] = useState({
         name: store.getState().patients.selectedPatient?.name,
         age: store.getState().patients.selectedPatient?.age.toString(),
@@ -45,6 +48,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
         symptoms: store.getState().patients.selectedPatient?.symptoms,
         diagnosis: store.getState().patients.selectedPatient?.diagnosis,
         prescribedMedication: store.getState().patients.selectedPatient?.prescribedMedication,
+        reports: store.getState().patients.selectedPatient?.reports,
         nextVisit: store.getState().patients.selectedPatient?.nextVisit,
     });
     const [formData, setFormData] = useState({
@@ -61,6 +65,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
         symptoms: store.getState().patients.selectedPatient?.symptoms,
         diagnosis: store.getState().patients.selectedPatient?.diagnosis,
         prescribedMedication: store.getState().patients.selectedPatient?.prescribedMedication,
+        reports: store.getState().patients.selectedPatient?.reports,
         nextVisit: store.getState().patients.selectedPatient?.nextVisit,
     });
     const handleAddMedication = () => {
@@ -127,6 +132,17 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
             setFormData({ ...formData, nextVisit: '' });
         }
     };
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            if (file.type !== 'application/pdf') {
+                setError('Only PDF files are allowed');
+                return;
+            }
+            setReportFile(file);
+            setError(null);
+        }
+    };
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.name || !formData.age || !formData.gender) {
@@ -138,6 +154,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
             alert('Please select at least one timing for each medication');
             return;
         }
+        setError(null)
         try {
             const patientData = {
                 ...formData,
@@ -149,7 +166,8 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString()
             };
-            dispatch(updatePatient(patientData));
+            dispatch(updatePatient({ patient: patientData ,reportFile:reportFile || undefined}));
+            setReportFile(null);
             setRightPanel('list');
         } catch (error) {
             console.error('Error creating patient:', error);
@@ -370,6 +388,17 @@ export const EditPatient: React.FC<EditPatientProps> = ({ setRightPanel, patient
                                     </div>
                                 </div>
                             ))}
+                        </div>
+                        <div className="mb-4 text-gray-700  gap-2">
+                            <div className=" grid grid-cols-1 md:grid-cols-5 gap-1">
+                            <label className=" ml-2 text-sm font-medium text-gray-700 md:col-span-1">Upload Report (PDF only)</label>
+                            <input
+                                type="file"
+                                accept=".pdf"
+                                onChange={handleFileChange}
+                                className="w-full p-2 border rounded"
+                            />
+                            </div>
                         </div>
                         <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
                             <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
