@@ -32,7 +32,7 @@ export const Patient: React.FC<PatientProps> = ({ setRightPanel, patientId }) =>
             {selectedPatient && (
                     <PDFDownloadLink
                         document={<PatientPDF patient={selectedPatient} />}
-                        fileName={`patient-${selectedPatient.name}-${patientId}.pdf`}
+                        fileName={`patient-${selectedPatient.name}.pdf`}
                     >
                         {({ loading }) => (
                             <Button variant="outline" disabled={loading}>
