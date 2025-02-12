@@ -39,3 +39,31 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore Python virtual environment
+ml_backend/venv/
+
+# Ignore Python cache files
+ml_backend/__pycache__/
+ml_backend/*.pyc
+ml_backend/*.pyo
+ml_backend/*.pyd
+
+
+# Ignore secrets and config files
+ml_backend/.env
+ml_backend/config.json
+ml_backend/secrets.json
+
+# Ignore logs and temporary files
+ml_backend/logs/
+ml_backend/*.log
+ml_backend/*.out
+ml_backend/*.tmp
+
+# Ignore Jupyter Notebook checkpoints
+ml_backend/.ipynb_checkpoints/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
