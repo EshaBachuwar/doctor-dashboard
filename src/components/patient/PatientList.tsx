@@ -1,9 +1,9 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { Button } from '../shared/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState, store } from '@/store';
-import { deletePatient, fetchPatients } from '@/actions/patientThunks';
+"use client";
+import React, { useEffect, useState } from "react";
+import { Button } from "../shared/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState, store } from "@/store";
+import { deletePatient, fetchPatients } from "@/actions/patientThunks";
 interface PatientListProps {
   setRightPanel: (panel: string) => void;
   setPatientId: (panel: string) => void;
@@ -17,12 +17,12 @@ export const PatientList: React.FC<PatientListProps> = ({
   const { patients, loading, error } = useSelector(
     (state: RootState) => state.patients
   );
-  const doctorId = store.getState().auth.doctor?.id || '';
+  const doctorId = store.getState().auth.doctor?.id || "";
   useEffect(() => {
     if (doctorId) dispatch(fetchPatients(doctorId));
   }, [dispatch, doctorId]);
   const handleAddPatient = () => {
-    setRightPanel('add');
+    setRightPanel("add");
   };
   const handleViewPatient = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -30,7 +30,7 @@ export const PatientList: React.FC<PatientListProps> = ({
   ) => {
     e.preventDefault();
     setPatientId(patientId);
-    setRightPanel('view');
+    setRightPanel("view");
   };
   const handleDeletePatient = (
     e: React.MouseEvent<HTMLButtonElement>,

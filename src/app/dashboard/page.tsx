@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAppSelector } from '@/store';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/store";
 
 import {
   UserCircle,
@@ -10,57 +10,54 @@ import {
   Stethoscope,
   ClipboardList,
   Bell,
-} from 'lucide-react';
-import { Navbar } from '@/components/navbar/Navbar';
-import { Button } from '@/components/shared/Button';
-import { Patient } from '@/components/patient/Patient';
-import { PatientList } from '@/components/patient/PatientList';
-import { AddPatient } from '@/components/patient/AddPatient';
-import { EditPatient } from '@/components/patient/EditPatient';
+} from "lucide-react";
+import { Navbar } from "@/components/navbar/Navbar";
+import { Button } from "@/components/shared/Button";
+import { Patient } from "@/components/patient/Patient";
+import { PatientList } from "@/components/patient/PatientList";
+import { AddPatient } from "@/components/patient/AddPatient";
+import { EditPatient } from "@/components/patient/EditPatient";
 
 const DashboardStats = [
   {
     icon: Calendar,
-    title: 'Upcoming Appointments',
+    title: "Upcoming Appointments",
     value: 12,
-    color: 'bg-blue-100 text-blue-600',
+    color: "bg-blue-100 text-blue-600",
   },
   {
     icon: Stethoscope,
-    title: 'Patients Treated',
+    title: "Patients Treated",
     value: 145,
-    color: 'bg-green-100 text-green-600',
+    color: "bg-green-100 text-green-600",
   },
   {
     icon: ClipboardList,
-    title: 'Pending Reports',
+    title: "Pending Reports",
     value: 5,
-    color: 'bg-yellow-100 text-yellow-600',
+    color: "bg-yellow-100 text-yellow-600",
   },
 ];
 
 export default function DashboardPage() {
   const router = useRouter();
   const { doctor, token } = useAppSelector((state) => state.auth);
-  const state = useAppSelector((state) => state.auth);
-  const [localDoctor, setLocalDoctor] = useState<any>(null);
-  const [rightPanel, setRightPanel] = useState('list');
-  const [patientId, setPatientId] = useState('');
+  const [rightPanel, setRightPanel] = useState("list");
+  const [patientId, setPatientId] = useState("");
   useEffect(() => {
     if (!token) {
-      router.push('/login');
+      router.push("/login");
     }
     const fetchDoctorProfile = async () => {
       try {
-        const response = await fetch('/api/doctor', {
+        const response = await fetch("/api/doctor", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         const data = await response.json();
-        setLocalDoctor(data);
       } catch (error) {
-        console.error('Failed to fetch profile', error);
+        console.error("Failed to fetch profile", error);
       }
     };
 
@@ -109,17 +106,17 @@ export default function DashboardPage() {
         </div>
 
         <div className="md:col-span-5 space-y-6 max-h-screen">
-          {rightPanel === 'list' && (
+          {rightPanel === "list" && (
             <PatientList
               setRightPanel={setRightPanel}
               setPatientId={setPatientId}
             />
           )}
-          {rightPanel === 'add' && <AddPatient setRightPanel={setRightPanel} />}
-          {rightPanel === 'view' && (
+          {rightPanel === "add" && <AddPatient setRightPanel={setRightPanel} />}
+          {rightPanel === "view" && (
             <Patient setRightPanel={setRightPanel} patientId={patientId} />
           )}
-          {rightPanel === 'edit' && (
+          {rightPanel === "edit" && (
             <EditPatient setRightPanel={setRightPanel} patientid={patientId} />
           )}
         </div>

@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '../shared/Button';
-import { Input } from '../shared/Input';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "../shared/Button";
+import { Input } from "../shared/Input";
 import {
   registerRequest,
   registerSuccess,
   registerFailure,
-} from '@/actions/authActions';
-import { useAppDispatch, useAppSelector } from '@/store';
-import Link from 'next/link';
+} from "@/actions/authActions";
+import { useAppDispatch, useAppSelector } from "@/store";
+import Link from "next/link";
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -18,19 +18,19 @@ export const RegisterForm = () => {
   const { loading, error, token } = useAppSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    gender: '',
-    phone: '',
-    specialization: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    age: "",
+    gender: "",
+    phone: "",
+    specialization: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   useEffect(() => {
     if (token) {
-      router.push('/dashboard');
+      router.push("/dashboard");
     }
   }, [token, router]);
 
@@ -48,21 +48,21 @@ export const RegisterForm = () => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      dispatch(registerFailure('Passwords do not match'));
+      dispatch(registerFailure("Passwords do not match"));
       return;
     }
 
     dispatch(registerRequest());
 
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name,
           age: parseInt(formData.age) || null,
           gender: formData.gender,
-          phone: formData.phone|| null,
+          phone: formData.phone || null,
           specialization: formData.specialization,
           email: formData.email,
           password: formData.password,
@@ -72,14 +72,14 @@ export const RegisterForm = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
         dispatch(registerSuccess(data));
-        router.push('/dashboard');
+        router.push("/dashboard");
       } else {
-        dispatch(registerFailure(data.message || 'Registration failed'));
+        dispatch(registerFailure(data.message || "Registration failed"));
       }
     } catch (err) {
-      dispatch(registerFailure('An error occurred during registration'));
+      dispatch(registerFailure("An error occurred during registration"));
     }
   };
 
@@ -92,7 +92,7 @@ export const RegisterForm = () => {
           label="Name"
           value={formData.name}
           onChange={handleChange}
-          className='text-gray-600'
+          className="text-gray-600"
           required
         />
         <Input
@@ -101,8 +101,7 @@ export const RegisterForm = () => {
           label="Age"
           value={formData.age}
           onChange={handleChange}
-          className='text-gray-600'
-
+          className="text-gray-600"
           required
         />
         <div className="flex flex-col gap-1">
@@ -129,8 +128,7 @@ export const RegisterForm = () => {
           label="Phone Number"
           value={formData.phone}
           onChange={handleChange}
-          className='text-gray-600'
-
+          className="text-gray-600"
           required
         />
         <Input
@@ -139,8 +137,7 @@ export const RegisterForm = () => {
           label="Specialization"
           value={formData.specialization}
           onChange={handleChange}
-          className='text-gray-600'
-
+          className="text-gray-600"
           required
         />
         <Input
@@ -149,8 +146,7 @@ export const RegisterForm = () => {
           label="Email"
           value={formData.email}
           onChange={handleChange}
-          className='text-gray-600'
-
+          className="text-gray-600"
           required
         />
         <Input
@@ -159,8 +155,7 @@ export const RegisterForm = () => {
           label="Password"
           value={formData.password}
           onChange={handleChange}
-          className='text-gray-600'
-
+          className="text-gray-600"
           required
         />
         <Input
@@ -169,13 +164,12 @@ export const RegisterForm = () => {
           label="Confirm Password"
           value={formData.confirmPassword}
           onChange={handleChange}
-          className='text-gray-600'
-
+          className="text-gray-600"
           required
         />
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? 'Registering...' : 'Register'}
+          {loading ? "Registering..." : "Register"}
         </Button>
       </form>
       <Link href="/login" className="text-blue-500 mt-5">
