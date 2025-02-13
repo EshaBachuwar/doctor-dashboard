@@ -7,11 +7,9 @@ import { store , persistor } from '@/store';
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-        {persistor && (
-            <PersistGate loading={null} persistor={persistor}>
-                {children}
-            </PersistGate>
-        )}
+        <PersistGate loading={null} persistor={persistor}>
+            {children}
+        </PersistGate>
     </Provider>
 );
 }
