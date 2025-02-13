@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { addPatient } from '@/actions/patientThunks';
 import { AppDispatch, store } from '@/store';
 import { Plus, X } from 'lucide-react';
+import { apiClient } from '@/lib/api-client';
+import { DiseaseResponse } from '@/types/disease';
 interface AddPatientProps {
     setRightPanel: (panel: string) => void;
 }
@@ -18,6 +20,8 @@ interface Medication {
 }
 export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
     const dispatch = useDispatch<AppDispatch>();
+    const [result, setResult] = useState<DiseaseResponse | null>(null);
+    const [showPredictionModal, setShowPredictionModal] = useState(false);
     const [medications, setMedications] = useState<Medication[]>([{
         name: '',
         timing: {
@@ -106,6 +110,19 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
         } else {
             setFormData({ ...formData, nextVisit: '' });
         }
+    };
+    const handlePredict = async () => {
+        try {
+            const symptomList = formData.symptoms.split(',').map((s) => s.trim());
+            const prediction = await apiClient.predictDisease(symptomList);
+            setResult(prediction);
+            setShowPredictionModal(true);
+        } catch (error) {
+            console.error('Prediction failed:', error);
+        }
+      };
+      const closePredictionModal = () => {
+        setShowPredictionModal(false);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -264,8 +281,8 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                         </div>
                     </div>
                     <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <div className='"md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
-                            <label className="text-sm font-medium text-gray-700 md:col-span-1">Symptoms:</label>
+                        <div className='"md:col-span-1 grid grid-cols-1 md:grid-cols-8 gap-1'>
+                            <label className="text-sm font-medium text-gray-700 md:col-span-2">Symptoms:</label>
                             <input
                                 type="text"
                                 value={formData.symptoms}
@@ -273,6 +290,7 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                                 required
                                 className="ml-1  md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
+                            <button onClick={handlePredict} className="md:col-span-2 bg-gray-200 text-black">Predict</button>
                         </div>
                         <div className='md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
                             <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">Diagnosis :</label>
@@ -380,6 +398,66 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                     </div>
                 </form>
             </div>
+            {showPredictionModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                    <div
+                        className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+                        onClick={closePredictionModal}
+                    ></div>
+                    <div className="bg-white rounded-lg p-6 shadow-xl z-10 max-w-md w-full">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-lg font-medium text-gray-600">Disease Prediction Results</h3>
+                            <button
+                                onClick={closePredictionModal}
+                                className="text-gray-400 hover:text-gray-500"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div className="space-y-4">
+                            {result && (
+                                <>
+                                    <div className="border-b pb-2">
+                                        <p className="text-sm text-gray-500">Based on the symptoms:</p>
+                                        <p className="font-medium text-gray-600">{formData.symptoms}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-500">Predicted Disease:</p>
+                                        <p className="font-medium text-lg text-gray-600">{result.disease}</p>
+                                    </div>
+                                    {result.description && (
+                                        <div>
+                                            <p className="text-sm text-gray-500">Description:</p>
+                                            <p className="text-sm text-gray-600">{result.description}</p>
+                                        </div>
+                                    )}
+                                    {result.medications && result.medications.length > 0 && (
+                                        <div>
+                                            <p className="text-sm text-gray-500">Medications:</p>
+                                            <ul className="list-disc list-inside text-sm text-gray-600">
+                                                {result.medications.map((medication, index) => (
+                                                    <li key={index}>{medication}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                        <div className="mt-6 flex justify-end">
+                            <Button
+                                variant="outline"
+                                onClick={() => {
+                                    setFormData({ ...formData, diagnosis: result?.disease || '' });
+                                    closePredictionModal();
+                                }}
+                            >
+                                Use as Diagnosis
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -5,7 +5,7 @@ export async function GET(
     { params }: { params: { path: string[] } }
 ) {
     const path = params.path.join('/');
-    const apiUrl = `${process.env.API_URL}/api/${path}`;
+    const apiUrl =`${process.env.NEXT_PUBLIC_API_URL}/api/${path}`;
 
     const response = await fetch(apiUrl);
     const data = await response.json();
@@ -18,7 +18,7 @@ export async function POST(
     { params }: { params: { path: string[] } }
 ) {
     const path = params.path.join('/');
-    const apiUrl = `${process.env.API_URL}/api/${path}`;
+    const apiUrl =`${process.env.NEXT_PUBLIC_API_URL}/api/${path}`;
 
     const response = await fetch(apiUrl, {
         method: 'POST',
