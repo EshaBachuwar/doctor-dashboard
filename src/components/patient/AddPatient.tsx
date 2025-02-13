@@ -111,7 +111,8 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
             setFormData({ ...formData, nextVisit: '' });
         }
     };
-    const handlePredict = async () => {
+    const handlePredict = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
             const symptomList = formData.symptoms.split(',').map((s) => s.trim());
             const prediction = await apiClient.predictDisease(symptomList);
@@ -290,7 +291,7 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
                                 required
                                 className="ml-1  md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            <button onClick={handlePredict} className="md:col-span-2 bg-gray-200 text-black">Predict</button>
+                            <button onClick={(e)=>handlePredict(e)} className="md:col-span-2 bg-gray-200 text-black">Predict</button>
                         </div>
                         <div className='md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
                             <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">Diagnosis :</label>
