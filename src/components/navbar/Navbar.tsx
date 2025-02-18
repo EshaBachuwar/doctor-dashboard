@@ -2,7 +2,10 @@ import Image from "next/image";
 import { Button } from "../shared/Button";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/store";
+import { useTheme } from "@/context/ThemeContext";
+import { Moon, Sun } from "lucide-react";
 export const Navbar: React.FC = () => {
+  const { darkMode, toggleTheme } = useTheme();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -27,7 +30,7 @@ export const Navbar: React.FC = () => {
   };
   return (
     <nav className=" ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Image src="/logo.png" alt="" width={64} height={32} />
@@ -39,6 +42,13 @@ export const Navbar: React.FC = () => {
               className="bg-rose-600 text-white hover:bg-rose-700"
             >
               Logout
+            </Button>
+            <Button
+              onClick={toggleTheme}
+              variant="outline"
+              className="px-3 py-1 m-1 duration-300 "
+            >
+              {darkMode ? <Sun /> : <Moon />}
             </Button>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { Button } from "../shared/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState, store } from "@/store";
 import { deletePatient, fetchPatients } from "@/actions/patientThunks";
+import { useTheme } from "@/context/ThemeContext";
 
 interface PatientListProps {
   setRightPanel: (panel: string) => void;
@@ -15,6 +16,7 @@ export const PatientList: React.FC<PatientListProps> = ({
   setPatientId,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const {darkMode, toggleTheme} = useTheme();
   const { patients, loading, error } = useSelector(
     (state: RootState) => state.patients
   );
@@ -51,7 +53,7 @@ export const PatientList: React.FC<PatientListProps> = ({
   );
 
   return (
-    <div className="w-full bg-pink-100 text-black shadow-md rounded-lg p-6">
+    <div className={`w-full ${darkMode?"bg-gray-700 text-white":"bg-pink-100 text-black"}  shadow-md rounded-lg p-6`}>
       <div className="flex items-center justify-center mb-4">
         <h3 className="text-xl font-semibold">List of Patients</h3>
       </div>
@@ -62,7 +64,7 @@ export const PatientList: React.FC<PatientListProps> = ({
           placeholder="Search patients..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+          className="w-full text-black p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
         />
       </div>
 

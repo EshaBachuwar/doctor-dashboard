@@ -17,6 +17,7 @@ import { Patient } from "@/components/patient/Patient";
 import { PatientList } from "@/components/patient/PatientList";
 import { AddPatient } from "@/components/patient/AddPatient";
 import { EditPatient } from "@/components/patient/EditPatient";
+import { useTheme } from "@/context/ThemeContext";
 
 const DashboardStats = [
   {
@@ -41,42 +42,22 @@ const DashboardStats = [
 
 export default function DashboardPage() {
   const router = useRouter();
+  const {darkMode, toggleTheme} = useTheme();
   const { doctor, token } = useAppSelector((state) => state.auth);
   const [rightPanel, setRightPanel] = useState("list");
   const [patientId, setPatientId] = useState("");
-  // useEffect(() => {
-  //   if (!token) {
-  //     router.push("/login");
-  //   }
-  //   const fetchDoctorProfile = async () => {
-  //     try {
-  //       const response = await fetch("/api/doctor", {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       const data = await response.json();
-  //     } catch (error) {
-  //       console.error("Failed to fetch profile", error);
-  //     }
-  //   };
-
-  //   if (token) {
-  //     fetchDoctorProfile();
-  //   }
-  // }, [token]);
   const currentDoctor = doctor;
   if (!currentDoctor) return null;
 
   return (
-    <div className="h-max bg-gradient-to-b from-rose-200 to-white p-6 pt-0">
+    <div className={`h-max bg-gradient-to-b ${darkMode?"from-gray-900 to-gray-800":"from-rose-200 to-white"}  p-6 pt-0`}>
       <Navbar />
       <div className=" h-max mx-auto grid grid-cols-1 md:grid-cols-7 gap-6">
-        <div className="  h-[100%] md:col-span-2 bg-pink-100 text-black shadow-lg rounded-lg p-6">
+        <div className={`h-[100%] md:col-span-2 ${darkMode?"bg-gray-700 text-white":"bg-pink-100 text-black"}   shadow-lg rounded-lg p-6`}>
           <div className="flex flex-col items-center">
             <UserCircle size={80} className="text-gray-400 mb-4" />
             <h2 className="text-xl font-bold">{currentDoctor.name}</h2>
-            <p className="text-gray-600">{currentDoctor.specialization}</p>
+            <p className={`${darkMode?"text-gray-200":"text-gray-600"} `}>{currentDoctor.specialization}</p>
 
             <div className="mt-6 w-full space-y-2">
               <div className="flex items-center">

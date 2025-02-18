@@ -7,6 +7,7 @@ import { Plus, X } from "lucide-react";
 import { updatePatient } from "@/actions/patientThunks";
 import { apiClient } from "@/lib/api-client";
 import { DiseaseResponse } from "@/types/disease";
+import { useTheme } from "@/context/ThemeContext";
 
 interface EditPatientProps {
   setRightPanel: (panel: string) => void;
@@ -44,6 +45,8 @@ export const EditPatient: React.FC<EditPatientProps> = ({
   const [result, setResult] = useState<DiseaseResponse | null>(null);
   const [showPredictionModal, setShowPredictionModal] = useState(false);
   const [reportFile, setReportFile] = useState<File | null>(null);
+  const { darkMode, toggleTheme } = useTheme();
+
   const [error, setError] = useState<string | null>(null);
   const [initialFormData, setInitialFormData] = useState({
     name: store.getState().patients.selectedPatient?.name,
@@ -226,7 +229,9 @@ export const EditPatient: React.FC<EditPatientProps> = ({
     setRightPanel("view");
   };
   return (
-    <div className=" bg-pink-100 text-black shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl">
+    <div className={`${
+      darkMode ? "bg-gray-700 text-white" : "bg-pink-100 text-black"
+    } shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl`}>
       <div className="">
         <div className="flex justify-end gap-2">
           <Button
@@ -238,15 +243,15 @@ export const EditPatient: React.FC<EditPatientProps> = ({
           </Button>
         </div>
         <div className="grid grid-cols-9 m-2">
-          <h1 className="text-2xl font-semibold mb-6 text-center text-black md:col-span-8">
+          <h1 className="text-2xl font-semibold mb-6 text-center md:col-span-8">
             Edit Patient
           </h1>
         </div>
         <div>
-          <form onSubmit={handleSubmit} className="text-gray-700 ">
-            <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
+          <form onSubmit={handleSubmit}  className={` ${darkMode ? "text-gray-100" : "text-gray-700 "}`}>
+            <div className="mb-4  grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className='"md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
-                <label className="text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="text-sm font-medium  md:col-span-1">
                   Name:
                 </label>
                 <input
@@ -257,7 +262,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 />
               </div>
               <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="ml-2 text-sm font-medium  md:col-span-1">
                   Age:
                 </label>
                 <input
@@ -267,13 +272,13 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                     setFormData({ ...formData, age: e.target.value })
                   }
                   required
-                  className="ml-1  md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="ml-1 text-black md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
-            <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className=" text-sm font-medium text-gray-700 md:col-span-1">
+                <label className=" text-sm font-medium  md:col-span-1">
                   Gender:
                 </label>
                 <select
@@ -288,7 +293,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 </select>
               </div>
               <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="ml-2 text-sm font-medium  md:col-span-1">
                   Phone:
                 </label>
                 <input
@@ -299,9 +304,9 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 />
               </div>
             </div>
-            <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="mb-4  grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className='"md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
-                <label className="text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="text-sm font-medium  md:col-span-1">
                   Weight:
                 </label>
                 <input
@@ -310,11 +315,11 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                   onChange={(e) =>
                     setFormData({ ...formData, weight: e.target.value })
                   }
-                  className="ml-1   md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="ml-1  text-black md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="ml-2 text-sm font-medium  md:col-span-1">
                   Blood Group:
                 </label>
                 <input
@@ -325,9 +330,9 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 />
               </div>
             </div>
-            <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="mb-4  grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className='"md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
-                <label className="text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="text-sm font-medium  md:col-span-1">
                   Known Allergies:
                 </label>
                 <input
@@ -338,7 +343,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 />
               </div>
               <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="ml-2 text-sm font-medium  md:col-span-1">
                   Medical History:
                 </label>
                 <input
@@ -349,9 +354,9 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 />
               </div>
             </div>
-            <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className='"md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
-                <label className="text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="text-sm font-medium  md:col-span-1">
                   Current Medication:
                 </label>
                 <input
@@ -362,7 +367,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 />
               </div>
               <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="ml-2 text-sm font-medium  md:col-span-1">
                   Reason Of Visit:
                 </label>
                 <input
@@ -372,13 +377,13 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                     setFormData({ ...formData, reasonOfVisit: e.target.value })
                   }
                   required
-                  className="ml-1  md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="ml-1 text-black md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
-            <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="mb-4  grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className='"md:col-span-1 grid grid-cols-1 md:grid-cols-8 gap-1'>
-                <label className="text-sm font-medium text-gray-700 md:col-span-2">
+                <label className="text-sm font-medium  md:col-span-2">
                   Symptoms:
                 </label>
                 <input
@@ -387,7 +392,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                   onChange={(e) =>
                     setFormData({ ...formData, symptoms: e.target.value })
                   }
-                  className="ml-1  md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="ml-1 text-black md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <button
                   onClick={(e) => handlePredict(e)}
@@ -397,7 +402,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 </button>
               </div>
               <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="ml-2 text-sm font-medium  md:col-span-1">
                   Diagnosis :
                 </label>
                 <input
@@ -406,12 +411,12 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                   onChange={(e) =>
                     setFormData({ ...formData, diagnosis: e.target.value })
                   }
-                  className="ml-1  md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="ml-1 text-black md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-medium text-gray-900">
+              <h3 className="text-lg font-medium">
                 Prescribed Medications
               </h3>
               <Button
@@ -429,7 +434,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 <div key={index} className="p-4 shadow-md mb-2 rounded-lg">
                   <div className="flex items-start gap-4 mb-2">
                     <div className="flex-1 w-full">
-                      <label className="mx-1 text-sm font-medium text-gray-700 mb-1">
+                      <label className="mx-1 text-sm font-medium  mb-1">
                         Medicine Name :
                       </label>
                       <input
@@ -438,7 +443,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                         onChange={(e) =>
                           handleMedicationChange(index, "name", e.target.value)
                         }
-                        className="px-4 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="px-4 py-2 w-full text-black border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter medicine name"
                       />
                     </div>
@@ -454,7 +459,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-gray-700 block mb-2">
+                    <label className="text-sm font-medium block mb-2">
                       Timing
                     </label>
                     <div className="flex flex-wrap gap-4">
@@ -471,7 +476,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                           }
                           className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                         />
-                        <span className="text-sm text-gray-700">Morning</span>
+                        <span className="text-sm ">Morning</span>
                       </label>
                       <label className="flex items-center gap-2">
                         <input
@@ -486,7 +491,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                           }
                           className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                         />
-                        <span className="text-sm text-gray-700">Afternoon</span>
+                        <span className="text-sm ">Afternoon</span>
                       </label>
                       <label className="flex items-center gap-2">
                         <input
@@ -501,16 +506,16 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                           }
                           className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                         />
-                        <span className="text-sm text-gray-700">Night</span>
+                        <span className="text-sm ">Night</span>
                       </label>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mb-4 text-gray-700  gap-2">
+            <div className="mb-4   gap-2">
               <div className=" grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className=" ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                <label className=" ml-2 text-sm font-medium  md:col-span-1">
                   Upload Report (PDF only)
                 </label>
                 <input
@@ -521,9 +526,9 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 />
               </div>
             </div>
-            <div className="mb-4 text-gray-700 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="mb-4  grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className="md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1">
-                <label className="ml-2 text-sm font-medium text-gray-700 md:col-span-1">
+                <label className="ml-2 text-sm font-medium  md:col-span-1">
                   Next Visit:
                 </label>
                 <input
@@ -531,7 +536,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                   value={getDateInputValue()}
                   onChange={handleDateChange}
                   min={new Date().toISOString().split("T")[0]}
-                  className="ml-1 md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="text-black ml-1 md:col-span-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
