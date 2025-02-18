@@ -4,6 +4,7 @@ import { Button } from "../shared/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState, store } from "@/store";
 import { deletePatient, fetchPatients } from "@/actions/patientThunks";
+
 interface PatientListProps {
   setRightPanel: (panel: string) => void;
   setPatientId: (panel: string) => void;
@@ -18,12 +19,16 @@ export const PatientList: React.FC<PatientListProps> = ({
     (state: RootState) => state.patients
   );
   const doctorId = store.getState().auth.doctor?.id || "";
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     if (doctorId) dispatch(fetchPatients(doctorId));
   }, [dispatch, doctorId]);
+
   const handleAddPatient = () => {
     setRightPanel("add");
   };
+
   const handleViewPatient = (
     e: React.MouseEvent<HTMLButtonElement>,
     patientId: string
@@ -32,6 +37,7 @@ export const PatientList: React.FC<PatientListProps> = ({
     setPatientId(patientId);
     setRightPanel("view");
   };
+
   const handleDeletePatient = (
     e: React.MouseEvent<HTMLButtonElement>,
     patientId: string
@@ -39,15 +45,31 @@ export const PatientList: React.FC<PatientListProps> = ({
     e.preventDefault();
     dispatch(deletePatient(patientId));
   };
+
+  const filteredPatients = patients.filter((patient) =>
+    patient.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="w-full bg-pink-100 text-black shadow-md rounded-lg p-6">
       <div className="flex items-center justify-center mb-4">
         <h3 className="text-xl font-semibold">List of Patients</h3>
       </div>
+
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search patients..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+        />
+      </div>
+
       <div className="w-full overflow-x-auto overflow-y-auto ">
         <div className="flex items-center justify-center w-full">
-          {patients.length === 0 && <p>No patients found</p>}
-          {patients.length > 0 && (
+          {filteredPatients.length === 0 && <p>No patients found</p>}
+          {filteredPatients.length > 0 && (
             <table className="w-full">
               <thead>
                 <tr>
@@ -57,7 +79,7 @@ export const PatientList: React.FC<PatientListProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {patients.map((patient, index) => (
+                {filteredPatients.map((patient, index) => (
                   <tr key={index}>
                     <td>{patient.name}</td>
                     <td>{patient.age}</td>

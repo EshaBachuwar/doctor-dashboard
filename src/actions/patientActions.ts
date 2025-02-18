@@ -93,9 +93,7 @@ interface SelectPatientAction {
 }
 interface ResetSelectedPatientAction {
   type: typeof RESET_SELECTED_PATIENT;
-
 }
-
 
 export type PatientActionTypes =
   | FetchPatientsRequestAction
@@ -207,6 +205,6 @@ export const selectPatient = (patient: Patient): SelectPatientAction => ({
   type: SELECT_PATIENT,
   payload: patient,
 });
-export const resetSelectedPatient = ():ResetSelectedPatientAction => ({
+export const resetSelectedPatient = (): ResetSelectedPatientAction => ({
   type: RESET_SELECTED_PATIENT,
 });

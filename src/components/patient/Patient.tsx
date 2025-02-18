@@ -42,7 +42,13 @@ export const Patient: React.FC<PatientProps> = ({
           >
             {({ loading }) => (
               <Button variant="outline" disabled={loading}>
-                {loading ? <Loader /> : <div className="flex gap-2 p-0"><Download /> Prescription</div>}
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <div className="flex gap-2 p-0">
+                    <Download /> Prescription
+                  </div>
+                )}
               </Button>
             )}
           </PDFDownloadLink>
