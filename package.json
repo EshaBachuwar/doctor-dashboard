@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.1",
-    "@react-pdf/renderer": "^4.2.1",
+    "@react-pdf/renderer": "^4.2.2",
     "@redux-devtools/extension": "^3.3.0",
     "bcryptjs": "^2.4.3",
     "date-fns": "^4.1.0",

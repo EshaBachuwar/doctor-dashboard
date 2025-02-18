@@ -8,6 +8,7 @@ import { Medications } from "./Medications";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { PatientPDF } from "./PatientPDF";
 import { Download, Loader } from "lucide-react";
+import { resetSelectedPatient } from "@/actions/patientActions";
 interface PatientProps {
   setRightPanel: (panel: string) => void;
   patientId: string;
@@ -24,31 +25,29 @@ export const Patient: React.FC<PatientProps> = ({
     if (patientId) dispatch(fetchPatientById(patientId));
   }, [dispatch, patientId]);
   const handleOnClose = () => {
+    dispatch(resetSelectedPatient());
     setRightPanel("list");
   };
   const handleEdit = () => {
     setRightPanel("edit");
   };
+  console.log(selectedPatient);
   return (
     <div className=" bg-pink-100 text-black shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl">
       <div className="flex justify-end gap-2">
-        {selectedPatient && (
+        {selectedPatient ? (
           <PDFDownloadLink
             document={<PatientPDF patient={selectedPatient} />}
             fileName={`patient-${selectedPatient.name}.pdf`}
           >
             {({ loading }) => (
               <Button variant="outline" disabled={loading}>
-                {loading ? (
-                  <Loader />
-                ) : (
-                  <div className="flex gap-2 p-0">
-                    <Download /> Prescription
-                  </div>
-                )}
+                {loading ? <Loader /> : <div className="flex gap-2 p-0"><Download /> Prescription</div>}
               </Button>
             )}
           </PDFDownloadLink>
+        ) : (
+          <p>No patient selected</p>
         )}
         <Button variant="outline" onClick={handleEdit}>
           Edit

@@ -44,27 +44,27 @@ export default function DashboardPage() {
   const { doctor, token } = useAppSelector((state) => state.auth);
   const [rightPanel, setRightPanel] = useState("list");
   const [patientId, setPatientId] = useState("");
-  useEffect(() => {
-    if (!token) {
-      router.push("/login");
-    }
-    const fetchDoctorProfile = async () => {
-      try {
-        const response = await fetch("/api/doctor", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-      } catch (error) {
-        console.error("Failed to fetch profile", error);
-      }
-    };
+  // useEffect(() => {
+  //   if (!token) {
+  //     router.push("/login");
+  //   }
+  //   const fetchDoctorProfile = async () => {
+  //     try {
+  //       const response = await fetch("/api/doctor", {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       const data = await response.json();
+  //     } catch (error) {
+  //       console.error("Failed to fetch profile", error);
+  //     }
+  //   };
 
-    if (token) {
-      fetchDoctorProfile();
-    }
-  }, [token]);
+  //   if (token) {
+  //     fetchDoctorProfile();
+  //   }
+  // }, [token]);
   const currentDoctor = doctor;
   if (!currentDoctor) return null;
 

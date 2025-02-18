@@ -16,6 +16,7 @@ export const DELETE_PATIENT_REQUEST = "DELETE_PATIENT_REQUEST";
 export const DELETE_PATIENT_SUCCESS = "DELETE_PATIENT_SUCCESS";
 export const DELETE_PATIENT_FAILURE = "DELETE_PATIENT_FAILURE";
 export const SELECT_PATIENT = "SELECT_PATIENT";
+export const RESET_SELECTED_PATIENT = "RESET_SELECTED_PATIENT";
 
 interface FetchPatientsRequestAction {
   type: typeof FETCH_PATIENTS_REQUEST;
@@ -90,6 +91,11 @@ interface SelectPatientAction {
   type: typeof SELECT_PATIENT;
   payload: Patient;
 }
+interface ResetSelectedPatientAction {
+  type: typeof RESET_SELECTED_PATIENT;
+
+}
+
 
 export type PatientActionTypes =
   | FetchPatientsRequestAction
@@ -107,7 +113,8 @@ export type PatientActionTypes =
   | DeletePatientRequestAction
   | DeletePatientSuccessAction
   | DeletePatientFailureAction
-  | SelectPatientAction;
+  | SelectPatientAction
+  | ResetSelectedPatientAction;
 
 export const fetchPatientsRequest = (): FetchPatientsRequestAction => ({
   type: FETCH_PATIENTS_REQUEST,
@@ -199,4 +206,7 @@ export const deletePatientFailure = (
 export const selectPatient = (patient: Patient): SelectPatientAction => ({
   type: SELECT_PATIENT,
   payload: patient,
+});
+export const resetSelectedPatient = ():ResetSelectedPatientAction => ({
+  type: RESET_SELECTED_PATIENT,
 });

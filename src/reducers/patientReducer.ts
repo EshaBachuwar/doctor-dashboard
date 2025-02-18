@@ -17,6 +17,7 @@ import {
   UPDATE_PATIENT_FAILURE,
   UPDATE_PATIENT_REQUEST,
   UPDATE_PATIENT_SUCCESS,
+  RESET_SELECTED_PATIENT,
 } from "../actions/patientActions";
 
 const initialState: PatientState = {
@@ -96,7 +97,11 @@ export const patientReducer = (
         ...state,
         selectedPatient: action.payload,
       };
-
+    case RESET_SELECTED_PATIENT:
+      return {
+        ...state,
+        selectedPatient: null,
+      };
     default:
       return state;
   }
