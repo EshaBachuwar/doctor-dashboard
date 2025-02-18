@@ -30,7 +30,13 @@ export const Medications = ({
     <div className="space-y-4">
       {medicationArray.map((med, index) => (
         <div key={index} className=" p-3 shadow-sm">
-          <div className={`font-medium ${darkMode?"text-gray-100":" text-gray-800"}`}>{med.name}</div>
+          <div
+            className={`font-medium ${
+              darkMode ? "text-gray-100" : " text-gray-800"
+            }`}
+          >
+            {med.name}
+          </div>
           <div className="flex gap-4 mt-2">
             <div
               className={`px-3 py-1 rounded-full text-sm ${

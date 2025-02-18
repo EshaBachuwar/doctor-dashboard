@@ -9,9 +9,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider>
-        {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </PersistGate>
     </Provider>
   );

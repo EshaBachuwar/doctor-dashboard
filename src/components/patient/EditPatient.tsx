@@ -229,9 +229,11 @@ export const EditPatient: React.FC<EditPatientProps> = ({
     setRightPanel("view");
   };
   return (
-    <div className={`${
-      darkMode ? "bg-gray-700 text-white" : "bg-pink-100 text-black"
-    } shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl`}>
+    <div
+      className={`${
+        darkMode ? "bg-gray-700 text-white" : "bg-pink-100 text-black"
+      } shadow-lg rounded-lg p-6 max-h-[88%] overflow-y-auto max-w-4xl`}
+    >
       <div className="">
         <div className="flex justify-end gap-2">
           <Button
@@ -248,7 +250,10 @@ export const EditPatient: React.FC<EditPatientProps> = ({
           </h1>
         </div>
         <div>
-          <form onSubmit={handleSubmit}  className={` ${darkMode ? "text-gray-100" : "text-gray-700 "}`}>
+          <form
+            onSubmit={handleSubmit}
+            className={` ${darkMode ? "text-gray-100" : "text-gray-700 "}`}
+          >
             <div className="mb-4  grid grid-cols-1 md:grid-cols-2 gap-2">
               <div className='"md:col-span-1 grid grid-cols-1 md:grid-cols-5 gap-1'>
                 <label className="text-sm font-medium  md:col-span-1">
@@ -416,9 +421,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
               </div>
             </div>
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-medium">
-                Prescribed Medications
-              </h3>
+              <h3 className="text-lg font-medium">Prescribed Medications</h3>
               <Button
                 type="button"
                 variant="outline"

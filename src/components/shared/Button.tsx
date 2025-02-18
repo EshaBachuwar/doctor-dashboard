@@ -13,7 +13,7 @@ export const Button = ({
   className = "",
   ...props
 }: ButtonProps) => {
-  const {darkMode, toggleTheme} = useTheme();
+  const { darkMode, toggleTheme } = useTheme();
   const baseStyles = "font-medium rounded-lg focus:outline-none focus:ring-2";
 
   const variants = {
@@ -35,7 +35,9 @@ export const Button = ({
 
   return (
     <button
-      className={`${baseStyles} ${darkMode ? darkVariants[variant] : variants[variant]} ${sizes[size]} ${className}`}
+      className={`${baseStyles} ${
+        darkMode ? darkVariants[variant] : variants[variant]
+      } ${sizes[size]} ${className}`}
       {...props}
     >
       {children}

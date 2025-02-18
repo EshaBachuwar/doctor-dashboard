@@ -16,7 +16,7 @@ export const PatientList: React.FC<PatientListProps> = ({
   setPatientId,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const {darkMode, toggleTheme} = useTheme();
+  const { darkMode, toggleTheme } = useTheme();
   const { patients, loading, error } = useSelector(
     (state: RootState) => state.patients
   );
@@ -53,7 +53,11 @@ export const PatientList: React.FC<PatientListProps> = ({
   );
 
   return (
-    <div className={`w-full ${darkMode?"bg-gray-700 text-white":"bg-pink-100 text-black"}  shadow-md rounded-lg p-6`}>
+    <div
+      className={`w-full ${
+        darkMode ? "bg-gray-700 text-white" : "bg-pink-100 text-black"
+      }  shadow-md rounded-lg p-6`}
+    >
       <div className="flex items-center justify-center mb-4">
         <h3 className="text-xl font-semibold">List of Patients</h3>
       </div>
