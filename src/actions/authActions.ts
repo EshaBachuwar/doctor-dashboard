@@ -34,7 +34,8 @@ export type AuthActionTypes =
   | LoginSuccessAction
   | LoginFailureAction
   | ClearErrorAction
-  | LogoutRequestAction;
+  | LogoutRequestAction
+  | SetTodayVisitCountAction;
 
 export const registerRequest = (): RegisterRequestAction => ({
   type: REGISTER_REQUEST,
@@ -59,6 +60,7 @@ export const clearError = (): ClearErrorAction => ({
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const SET_TODAY_VISIT_COUNT = "SET_TODAY_VISIT_COUNT";
 
 interface LoginRequestAction {
   type: typeof LOGIN_REQUEST;
@@ -76,6 +78,10 @@ interface LoginFailureAction {
   type: typeof LOGIN_FAILURE;
   payload: string;
 }
+interface SetTodayVisitCountAction {
+  type: typeof SET_TODAY_VISIT_COUNT;
+  payload: number;
+}
 export const loginRequest = (): LoginRequestAction => ({
   type: LOGIN_REQUEST,
 });
@@ -91,6 +97,10 @@ export const loginSuccess = (data: {
 export const loginFailure = (error: string): LoginFailureAction => ({
   type: LOGIN_FAILURE,
   payload: error,
+});
+export const setTodayVisitCount = (count: number) => ({
+  type: SET_TODAY_VISIT_COUNT,
+  payload: count,
 });
 export const LOGOUT = "AUTH/LOGOUT";
 interface LogoutRequestAction {

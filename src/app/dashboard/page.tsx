@@ -18,27 +18,6 @@ import { AddPatient } from "@/components/patient/AddPatient";
 import { EditPatient } from "@/components/patient/EditPatient";
 import { useTheme } from "@/context/ThemeContext";
 
-const DashboardStats = [
-  {
-    icon: Calendar,
-    title: "Upcoming Appointments",
-    value: 12,
-    color: "bg-blue-100 text-blue-600",
-  },
-  {
-    icon: Stethoscope,
-    title: "Patients Treated",
-    value: 145,
-    color: "bg-green-100 text-green-600",
-  },
-  {
-    icon: ClipboardList,
-    title: "Pending Reports",
-    value: 5,
-    color: "bg-yellow-100 text-yellow-600",
-  },
-];
-
 export default function DashboardPage() {
   const router = useRouter();
   const { darkMode, toggleTheme } = useTheme();
@@ -46,6 +25,28 @@ export default function DashboardPage() {
   const [rightPanel, setRightPanel] = useState("list");
   const [patientId, setPatientId] = useState("");
   const currentDoctor = doctor;
+  const todayVisitCount = useAppSelector((state) => state.auth.todayVisitCount);
+  const DashboardStats = [
+    {
+      icon: Calendar,
+      title: "Today's Appointments",
+      value: todayVisitCount,
+      color: "bg-blue-100 text-blue-600",
+    },
+    {
+      icon: Stethoscope,
+      title: "Patients Treated",
+      value: 145,
+      color: "bg-green-100 text-green-600",
+    },
+    {
+      icon: ClipboardList,
+      title: "Pending Reports",
+      value: 5,
+      color: "bg-yellow-100 text-yellow-600",
+    },
+  ];
+  console.log(todayVisitCount);
   if (!currentDoctor) return null;
 
   return (

@@ -8,6 +8,8 @@ import {
   loginRequest,
   loginSuccess,
   loginFailure,
+  setTodayVisitCount,
+  SET_TODAY_VISIT_COUNT,
 } from "@/actions/authActions";
 import { useAppDispatch, useAppSelector } from "@/store";
 import Link from "next/link";
@@ -49,9 +51,25 @@ export const LoginForm = () => {
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (response.ok) {
         localStorage.setItem("token", data.token);
+        try {
+          const res = await fetch(`/api/doctor/${data.doctor.id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+          if (res.ok) {
+            const doc = await res.json();
+            localStorage.setItem("todayVisitCount", doc.todayVisitCount);
+            dispatch({
+              type: SET_TODAY_VISIT_COUNT,
+              payload: doc.todayVisitCount,
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching today's visits", error);
+        }
         dispatch(loginSuccess(data));
         router.push("/dashboard");
       } else {

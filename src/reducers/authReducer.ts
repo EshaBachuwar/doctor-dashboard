@@ -9,6 +9,7 @@ import {
   REGISTER_FAILURE,
   CLEAR_ERROR,
   LOGOUT,
+  SET_TODAY_VISIT_COUNT,
 } from "../actions/authActions";
 
 const initialState: AuthState = {
@@ -16,6 +17,7 @@ const initialState: AuthState = {
   token: null,
   loading: false,
   error: null,
+  todayVisitCount: 0,
 };
 
 export const authReducer = (
@@ -50,6 +52,11 @@ export const authReducer = (
       return {
         ...state,
         error: null,
+      };
+    case SET_TODAY_VISIT_COUNT:
+      return {
+        ...state,
+        todayVisitCount: action.payload,
       };
     case LOGOUT:
       return {
