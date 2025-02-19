@@ -35,7 +35,9 @@ export type AuthActionTypes =
   | LoginFailureAction
   | ClearErrorAction
   | LogoutRequestAction
-  | SetTodayVisitCountAction;
+  | SetTodayVisitCountAction
+  | SetWeekVisitCountAction
+  | SetMonthVisitCountAction;
 
 export const registerRequest = (): RegisterRequestAction => ({
   type: REGISTER_REQUEST,
@@ -61,6 +63,8 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const SET_TODAY_VISIT_COUNT = "SET_TODAY_VISIT_COUNT";
+export const SET_WEEK_VISIT_COUNT = "SET_WEEK_VISIT_COUNT";
+export const SET_MONTH_VISIT_COUNT = "SET_MONTH_VISIT_COUNT";
 
 interface LoginRequestAction {
   type: typeof LOGIN_REQUEST;
@@ -82,6 +86,14 @@ interface SetTodayVisitCountAction {
   type: typeof SET_TODAY_VISIT_COUNT;
   payload: number;
 }
+interface SetWeekVisitCountAction {
+  type: typeof SET_WEEK_VISIT_COUNT;
+  payload: number;
+}
+interface SetMonthVisitCountAction {
+  type: typeof SET_MONTH_VISIT_COUNT;
+  payload: number;
+}
 export const loginRequest = (): LoginRequestAction => ({
   type: LOGIN_REQUEST,
 });
@@ -100,6 +112,14 @@ export const loginFailure = (error: string): LoginFailureAction => ({
 });
 export const setTodayVisitCount = (count: number) => ({
   type: SET_TODAY_VISIT_COUNT,
+  payload: count,
+});
+export const setWeekVisitCount = (count: number) => ({
+  type: SET_WEEK_VISIT_COUNT,
+  payload: count,
+});
+export const setMonthVisitCount = (count: number) => ({
+  type: SET_MONTH_VISIT_COUNT,
   payload: count,
 });
 export const LOGOUT = "AUTH/LOGOUT";

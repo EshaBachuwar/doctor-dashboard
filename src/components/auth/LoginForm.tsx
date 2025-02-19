@@ -10,6 +10,8 @@ import {
   loginFailure,
   setTodayVisitCount,
   SET_TODAY_VISIT_COUNT,
+  SET_WEEK_VISIT_COUNT,
+  SET_MONTH_VISIT_COUNT,
 } from "@/actions/authActions";
 import { useAppDispatch, useAppSelector } from "@/store";
 import Link from "next/link";
@@ -62,9 +64,19 @@ export const LoginForm = () => {
           if (res.ok) {
             const doc = await res.json();
             localStorage.setItem("todayVisitCount", doc.todayVisitCount);
+            localStorage.setItem("weekVisitCount", doc.weekVisitCount);
+            localStorage.setItem("monthVisitCount", doc.monthVisitCount);
             dispatch({
               type: SET_TODAY_VISIT_COUNT,
               payload: doc.todayVisitCount,
+            });
+            dispatch({
+              type: SET_WEEK_VISIT_COUNT,
+              payload: doc.weekVisitCount,
+            });
+            dispatch({
+              type: SET_MONTH_VISIT_COUNT,
+              payload: doc.monthVisitCount,
             });
           }
         } catch (error) {

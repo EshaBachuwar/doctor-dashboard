@@ -23,7 +23,12 @@ export async function GET(
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     let todayVisitCount = 0;
+    let weekVisitCount = 0;
+    let monthVisitCount = 0;
     const patientIds = doctor.patients || [];
     const patients = await Patient.find({
       _id: { $in: patientIds },
@@ -37,11 +42,29 @@ export async function GET(
         }
         return false;
       }).length;
+      weekVisitCount = await Patient.countDocuments({
+        _id: { $in: patientIds },
+        createdAt: {
+          $gte: startOfWeek,
+          $lt: tomorrow
+        }
+      });
+      monthVisitCount = await Patient.countDocuments({
+        _id: { $in: patientIds },
+        createdAt: {
+          $gte: startOfMonth,
+          $lt: tomorrow
+        }
+      });
     }
+    console.log(weekVisitCount);
+    console.log(monthVisitCount);
     return NextResponse.json(
       {
         doctor,
         todayVisitCount,
+        weekVisitCount,
+        monthVisitCount,
         message: "Doctor data retrieved successfully",
       },
       { status: 200 }

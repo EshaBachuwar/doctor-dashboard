@@ -9,7 +9,6 @@ import {
   Calendar,
   Stethoscope,
   ClipboardList,
-  Bell,
 } from "lucide-react";
 import { Navbar } from "@/components/navbar/Navbar";
 import { Patient } from "@/components/patient/Patient";
@@ -26,6 +25,8 @@ export default function DashboardPage() {
   const [patientId, setPatientId] = useState("");
   const currentDoctor = doctor;
   const todayVisitCount = useAppSelector((state) => state.auth.todayVisitCount);
+  const weekVisitCount = useAppSelector((state) => state.auth.weekVisitCount);
+  const monthVisitCount = useAppSelector((state) => state.auth.monthVisitCount);
   const DashboardStats = [
     {
       icon: Calendar,
@@ -35,14 +36,14 @@ export default function DashboardPage() {
     },
     {
       icon: Stethoscope,
-      title: "Patients Treated",
-      value: 145,
+      title: "Weekly Visits",
+      value: weekVisitCount,
       color: "bg-green-100 text-green-600",
     },
     {
       icon: ClipboardList,
-      title: "Pending Reports",
-      value: 5,
+      title: "Monthly Visits",
+      value: monthVisitCount,
       color: "bg-yellow-100 text-yellow-600",
     },
   ];

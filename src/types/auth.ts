@@ -14,4 +14,6 @@ export interface AuthState {
   loading: boolean;
   error: string | null;
   todayVisitCount: number;
+  weekVisitCount: number;
+  monthVisitCount: number;
 }

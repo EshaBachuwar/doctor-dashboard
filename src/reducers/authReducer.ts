@@ -10,6 +10,8 @@ import {
   CLEAR_ERROR,
   LOGOUT,
   SET_TODAY_VISIT_COUNT,
+  SET_WEEK_VISIT_COUNT,
+  SET_MONTH_VISIT_COUNT,
 } from "../actions/authActions";
 
 const initialState: AuthState = {
@@ -18,6 +20,8 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   todayVisitCount: 0,
+  weekVisitCount: 0,
+  monthVisitCount: 0,
 };
 
 export const authReducer = (
@@ -57,6 +61,16 @@ export const authReducer = (
       return {
         ...state,
         todayVisitCount: action.payload,
+      };
+    case SET_WEEK_VISIT_COUNT:
+      return {
+        ...state,
+        weekVisitCount: action.payload,
+      };
+    case SET_MONTH_VISIT_COUNT:
+      return {
+        ...state,
+        monthVisitCount: action.payload,
       };
     case LOGOUT:
       return {
