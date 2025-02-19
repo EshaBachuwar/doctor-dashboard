@@ -57,8 +57,6 @@ export async function GET(
         }
       });
     }
-    console.log(weekVisitCount);
-    console.log(monthVisitCount);
     return NextResponse.json(
       {
         doctor,

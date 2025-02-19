@@ -8,6 +8,7 @@ import { Plus, X } from "lucide-react";
 import { apiClient } from "@/lib/api-client";
 import { DiseaseResponse } from "@/types/disease";
 import { useTheme } from "@/context/ThemeContext";
+import { SET_MONTH_VISIT_COUNT, SET_WEEK_VISIT_COUNT } from "@/actions/authActions";
 interface AddPatientProps {
   setRightPanel: (panel: string) => void;
 }
@@ -165,6 +166,14 @@ export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
         updatedAt: new Date().toISOString(),
       };
       dispatch(addPatient(patientData));
+      dispatch({
+        type: SET_WEEK_VISIT_COUNT,
+        payload: store.getState().auth.weekVisitCount + 1,
+      });
+      dispatch({
+        type:SET_MONTH_VISIT_COUNT,
+        payload: store.getState().auth.monthVisitCount + 1,
+      })
       setRightPanel("list");
     } catch (error) {
       console.error("Error creating patient:", error);
