@@ -33,7 +33,6 @@ export const Patient: React.FC<PatientProps> = ({
   const handleEdit = () => {
     setRightPanel("edit");
   };
-  console.log(selectedPatient);
   return (
     <div
       className={`${

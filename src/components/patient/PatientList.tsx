@@ -3,28 +3,41 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../shared/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState, store } from "@/store";
-import { deletePatient, fetchPatients } from "@/actions/patientThunks";
+import {
+  deletePatient,
+  fetchPatients,
+  fetchReferredPatients,
+} from "@/actions/patientThunks";
 import { useTheme } from "@/context/ThemeContext";
+import { Trash } from "lucide-react";
+import { ReferPatient } from "./ReferPatient";
 
 interface PatientListProps {
   setRightPanel: (panel: string) => void;
   setPatientId: (panel: string) => void;
+  patientId: string;
 }
 
 export const PatientList: React.FC<PatientListProps> = ({
   setRightPanel,
   setPatientId,
+  patientId,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { darkMode, toggleTheme } = useTheme();
-  const { patients, loading, error } = useSelector(
+  const { patients, loading, error,referredPatients } = useSelector(
     (state: RootState) => state.patients
   );
   const doctorId = store.getState().auth.doctor?.id || "";
   const [searchTerm, setSearchTerm] = useState("");
+  const [patientList, setPatientList] = useState(true);
+  const [openRefer, setOpenRefer] = useState(false);
 
   useEffect(() => {
-    if (doctorId) dispatch(fetchPatients(doctorId));
+    if (doctorId) {
+      dispatch(fetchPatients(doctorId));
+      dispatch(fetchReferredPatients(doctorId));
+    }
   }, [dispatch, doctorId]);
 
   const handleAddPatient = () => {
@@ -37,6 +50,7 @@ export const PatientList: React.FC<PatientListProps> = ({
   ) => {
     e.preventDefault();
     setPatientId(patientId);
+    console.log(patientId);
     setRightPanel("view");
   };
 
@@ -47,9 +61,19 @@ export const PatientList: React.FC<PatientListProps> = ({
     e.preventDefault();
     dispatch(deletePatient(patientId));
   };
-
-  const filteredPatients = patients.filter((patient) =>
-    patient.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleReferPatient = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    patientId: string
+  ) => {
+    e.preventDefault();
+    setPatientId(patientId);
+    setOpenRefer(true);
+  };
+  console.log(referredPatients);
+  console.log(patients);
+  const visiblePatients = patientList ? patients || [] : referredPatients || [];
+  const filteredPatients = visiblePatients?.filter((patient) =>
+    patient?.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -58,8 +82,21 @@ export const PatientList: React.FC<PatientListProps> = ({
         darkMode ? "bg-gray-700 text-white" : "bg-pink-100 text-black"
       }  shadow-md rounded-lg p-6`}
     >
-      <div className="flex items-center justify-center mb-4">
-        <h3 className="text-xl font-semibold">List of Patients</h3>
+      <div className="flex items-center justify-center mb-4 gap-2">
+        <Button
+          variant={`${!patientList ? "outline" : "primary"}`}
+          size={`${patientList ? "lg" : "sm"}`}
+          onClick={() => setPatientList(true)}
+        >
+          List of Patients
+        </Button>
+        <Button
+          variant={`${patientList ? "outline" : "primary"}`}
+          size={`${!patientList ? "lg" : "sm"}`}
+          onClick={() => setPatientList(false)}
+        >
+          Referred Patients
+        </Button>
       </div>
 
       <div className="mb-4">
@@ -82,6 +119,7 @@ export const PatientList: React.FC<PatientListProps> = ({
                   <th className="text-left">Name</th>
                   <th className="text-left">Age</th>
                   <th className="text-left"></th>
+                  <th className="text-left"></th>
                 </tr>
               </thead>
               <tbody>
@@ -99,9 +137,19 @@ export const PatientList: React.FC<PatientListProps> = ({
                       </Button>
                       <Button
                         variant="outline"
-                        onClick={(e) => handleDeletePatient(e, patient.id)}
+                        onClick={(e) => handleReferPatient(e, patient.id)}
+                        className="mr-2"
                       >
-                        Delete
+                        Refer
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        variant="outline"
+                        onClick={(e) => handleDeletePatient(e, patient.id)}
+                        className="border-0"
+                      >
+                        <Trash />
                       </Button>
                     </td>
                   </tr>
@@ -116,6 +164,13 @@ export const PatientList: React.FC<PatientListProps> = ({
           </Button>
         </div>
       </div>
+      {openRefer && (
+        <ReferPatient
+          setRightPanel={setRightPanel}
+          patientId={patientId}
+          setOpenRefer={setOpenRefer}
+        />
+      )}
     </div>
   );
 };

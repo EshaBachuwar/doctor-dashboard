@@ -15,6 +15,9 @@ import {
   fetchPatientRequest,
   fetchPatientSuccess,
   fetchPatientFailure,
+  fetchReferredPatientsRequest,
+  fetchReferredPatientsSuccess,
+  fetchReferredPatientsFailure,
 } from "./patientActions";
 import { Patient } from "@/types/patient";
 
@@ -153,6 +156,55 @@ export const deletePatient =
     } catch (error) {
       dispatch(
         deletePatientFailure(
+          error instanceof Error ? error.message : "Unexpected error"
+        )
+      );
+    }
+  };
+
+  export const fetchReferredPatients =
+  (doctorId: string) => async (dispatch: AppDispatch) => {
+    dispatch(fetchReferredPatientsRequest());
+    try {
+      const response = await fetch(`/api/doctor/${doctorId}/referred`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok)
+        throw new Error(`Error ${response.status}: Failed to fetch patients`);
+
+      const data = await response.json();
+      const modifiedData = data.map((patient: any) => ({
+        ...patient,
+        id: patient._id, // Add `id` field
+        _id: undefined,   // Optionally remove `_id`
+      }));
+      dispatch(fetchReferredPatientsSuccess(modifiedData));
+    } catch (error) {
+      dispatch(
+        fetchReferredPatientsFailure(
+          error instanceof Error ? error.message : "Unexpected error"
+        )
+      );
+    }
+  };
+export const referPatient =
+  (doctorId: string, patientId: string) => async (dispatch: AppDispatch) => {
+    dispatch(addPatientRequest());
+    try {
+      const response = await fetch(`/api/doctor/${doctorId}/referred`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ patientId }),
+      });
+
+      if (!response.ok)
+        throw new Error(`Error ${response.status}: Failed to refer patient`);
+
+      const data = await response.json();
+    } catch (error) {
+      dispatch(
+        addPatientFailure(
           error instanceof Error ? error.message : "Unexpected error"
         )
       );

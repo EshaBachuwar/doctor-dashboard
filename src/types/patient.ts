@@ -41,6 +41,7 @@ export interface Patient {
 
 export interface PatientState {
   patients: Patient[];
+  referredPatients: Patient[];
   loading: boolean;
   error: string | null;
   selectedPatient: Patient | null;

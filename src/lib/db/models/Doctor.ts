@@ -1,7 +1,11 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-export interface IDoctor extends Document {
+interface ReferredPatient {
+    patient: mongoose.Types.ObjectId;
+    referredBy: mongoose.Types.ObjectId;
+    referredAt: Date;
+}export interface IDoctor extends Document {
     name: string;
     email: string;
     password: string;
@@ -9,11 +13,28 @@ export interface IDoctor extends Document {
     age:Number;
     phone:string;
     patients: mongoose.Types.ObjectId[];
+    referredPatients: ReferredPatient[];
     createdAt: Date;
     updatedAt: Date;
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
+const ReferredPatientSchema = new Schema({
+    patient: {
+        type: Schema.Types.ObjectId,
+        ref: 'Patient',
+        required: true
+    },
+    referredBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Doctor',
+        required: true
+    },
+    referredAt: {
+        type: Date,
+        default: Date.now
+    }
+});
 const DoctorSchema = new Schema({
     name: {
         type: String,
@@ -41,12 +62,12 @@ const DoctorSchema = new Schema({
     },
     phone: {
         type: String,
-        required: [true, 'Please provide a Phone Number'],
     },
     patients: [{
         type: Schema.Types.ObjectId,
         ref: 'Patient'
-    }]
+    }],
+    referredPatients: [ReferredPatientSchema]
 }, {
     timestamps: true
 });

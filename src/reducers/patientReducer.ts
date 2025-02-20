@@ -18,10 +18,14 @@ import {
   UPDATE_PATIENT_REQUEST,
   UPDATE_PATIENT_SUCCESS,
   RESET_SELECTED_PATIENT,
+  FETCH_REFERRED_PATIENTS_REQUEST,
+  FETCH_REFERRED_PATIENTS_SUCCESS,
+  FETCH_REFERRED_PATIENTS_FAILURE,
 } from "../actions/patientActions";
 
 const initialState: PatientState = {
   patients: [],
+  referredPatients: [],
   loading: false,
   error: null,
   selectedPatient: null,
@@ -33,6 +37,7 @@ export const patientReducer = (
 ): PatientState => {
   switch (action.type) {
     case FETCH_PATIENTS_REQUEST:
+    case FETCH_REFERRED_PATIENTS_REQUEST:
     case FETCH_PATIENT_REQUEST:
     case ADD_PATIENT_REQUEST:
     case UPDATE_PATIENT_REQUEST:
@@ -48,6 +53,12 @@ export const patientReducer = (
         ...state,
         loading: false,
         patients: action.payload,
+      };
+    case FETCH_REFERRED_PATIENTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        referredPatients: action.payload,
       };
     case FETCH_PATIENT_SUCCESS:
       return {
@@ -82,6 +93,7 @@ export const patientReducer = (
       };
 
     case FETCH_PATIENTS_FAILURE:
+    case FETCH_REFERRED_PATIENTS_FAILURE:
     case FETCH_PATIENT_FAILURE:
     case ADD_PATIENT_FAILURE:
     case UPDATE_PATIENT_FAILURE:

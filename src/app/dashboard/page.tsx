@@ -47,7 +47,6 @@ export default function DashboardPage() {
       color: "bg-yellow-100 text-yellow-600",
     },
   ];
-  console.log(todayVisitCount);
   if (!currentDoctor) return null;
 
   return (
@@ -102,6 +101,7 @@ export default function DashboardPage() {
             <PatientList
               setRightPanel={setRightPanel}
               setPatientId={setPatientId}
+              patientId={patientId}
             />
           )}
           {rightPanel === "add" && <AddPatient setRightPanel={setRightPanel} />}
