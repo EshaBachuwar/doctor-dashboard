@@ -1,7 +1,6 @@
 import dbConnect from "@/lib/db/connect";
 import Doctor from "@/lib/db/models/Doctor";
 import Patient from "@/lib/db/models/Patient";
-import jwt from "jsonwebtoken";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 

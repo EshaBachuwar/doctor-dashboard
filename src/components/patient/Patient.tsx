@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button } from "../shared/Button";
 import { useDispatch } from "react-redux";
 import { fetchPatientById } from "@/actions/patientThunks";
@@ -19,7 +19,7 @@ export const Patient: React.FC<PatientProps> = ({
   patientId,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { darkMode, toggleTheme } = useTheme();
+  const { darkMode } = useTheme();
   const selectedPatient = useAppSelector(
     (state) => state.patients.selectedPatient
   );

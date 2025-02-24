@@ -13,9 +13,6 @@ interface EditPatientProps {
   setRightPanel: (panel: string) => void;
   patientid: string;
 }
-interface AddPatientProps {
-  setRightPanel: (panel: string) => void;
-}
 interface Medication {
   name: string;
   timing: {
@@ -45,8 +42,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
   const [result, setResult] = useState<DiseaseResponse | null>(null);
   const [showPredictionModal, setShowPredictionModal] = useState(false);
   const [reportFile, setReportFile] = useState<File | null>(null);
-  const { darkMode, toggleTheme } = useTheme();
-
+  const { darkMode } = useTheme();
   const [error, setError] = useState<string | null>(null);
   const [initialFormData, setInitialFormData] = useState({
     name: store.getState().patients.selectedPatient?.name,

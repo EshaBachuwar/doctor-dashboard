@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "../shared/Button";
-import { useSelector } from "react-redux";
 import { useAppSelector } from "@/store";
 interface RefrePatientProps {
   setRightPanel: (panel: string) => void;
@@ -26,7 +25,6 @@ export const ReferPatient: React.FC<RefrePatientProps> = ({
     referredPatients?: any[];
   }
   const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [selectedDoctor, setSelectedDoctor] = useState("");
   const { doctor, token } = useAppSelector((state) => state.auth);
   const handleRefer = async (doctorId: string) => {
     try {

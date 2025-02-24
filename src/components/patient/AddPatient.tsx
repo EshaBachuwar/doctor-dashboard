@@ -25,7 +25,7 @@ interface Medication {
 }
 export const AddPatient: React.FC<AddPatientProps> = ({ setRightPanel }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { darkMode, toggleTheme } = useTheme();
+  const { darkMode } = useTheme();
   const [result, setResult] = useState<DiseaseResponse | null>(null);
   const [showPredictionModal, setShowPredictionModal] = useState(false);
   const [medications, setMedications] = useState<Medication[]>([

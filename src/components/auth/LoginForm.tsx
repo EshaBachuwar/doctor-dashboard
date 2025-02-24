@@ -8,7 +8,6 @@ import {
   loginRequest,
   loginSuccess,
   loginFailure,
-  setTodayVisitCount,
   SET_TODAY_VISIT_COUNT,
   SET_WEEK_VISIT_COUNT,
   SET_MONTH_VISIT_COUNT,

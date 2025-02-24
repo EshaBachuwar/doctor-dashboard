@@ -17,7 +17,6 @@ export async function GET(
         { status: 404 }
       );
     }
-    // Get the referred patients
     const referredPatientIds = doctor.referredPatients.map(
       (ref: any) => ref.patient
     );

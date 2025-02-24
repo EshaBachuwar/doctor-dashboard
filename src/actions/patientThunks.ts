@@ -176,8 +176,8 @@ export const fetchReferredPatients =
       const data = await response.json();
       const modifiedData = data.map((patient: any) => ({
         ...patient,
-        id: patient._id, // Add `id` field
-        _id: undefined, // Optionally remove `_id`
+        id: patient._id,
+        _id: undefined,
       }));
       dispatch(fetchReferredPatientsSuccess(modifiedData));
     } catch (error) {

@@ -12,9 +12,8 @@ import { EditPatient } from "@/components/patient/EditPatient";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function DashboardPage() {
-  const router = useRouter();
-  const { darkMode, toggleTheme } = useTheme();
-  const { doctor, token } = useAppSelector((state) => state.auth);
+  const { darkMode } = useTheme();
+  const { doctor } = useAppSelector((state) => state.auth);
   const [rightPanel, setRightPanel] = useState("list");
   const [patientId, setPatientId] = useState("");
   const currentDoctor = doctor;

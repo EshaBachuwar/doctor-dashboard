@@ -18,7 +18,7 @@ export const Medications = ({
 }: {
   medications?: Medication[] | null;
 }) => {
-  const { darkMode, toggleTheme } = useTheme();
+  const { darkMode } = useTheme();
 
   const medicationArray = Array.isArray(medications) ? medications : [];
 
