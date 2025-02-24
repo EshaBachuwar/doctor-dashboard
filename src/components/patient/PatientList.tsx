@@ -25,7 +25,7 @@ export const PatientList: React.FC<PatientListProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { darkMode, toggleTheme } = useTheme();
-  const { patients, loading, error,referredPatients } = useSelector(
+  const { patients, loading, error, referredPatients } = useSelector(
     (state: RootState) => state.patients
   );
   const doctorId = store.getState().auth.doctor?.id || "";

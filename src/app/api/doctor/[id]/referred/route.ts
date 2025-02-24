@@ -18,12 +18,14 @@ export async function GET(
       );
     }
     // Get the referred patients
-    const referredPatientIds = doctor.referredPatients.map((ref:any) => ref.patient);
+    const referredPatientIds = doctor.referredPatients.map(
+      (ref: any) => ref.patient
+    );
 
     const referredPatients = await Patient.find({
       _id: { $in: referredPatientIds },
     });
-    return NextResponse.json( referredPatients );
+    return NextResponse.json(referredPatients);
   } catch (error) {
     console.error("Error fetching doctor:", error);
     return NextResponse.json(
@@ -47,15 +49,15 @@ export async function PUT(
         { status: 404 }
       );
     }
-    const { patientId,referredBy } = await req.json();
+    const { patientId, referredBy } = await req.json();
     if (!patientId || !referredBy) {
       return NextResponse.json(
         { error: "Missing patientId or referredBy" },
         { status: 400 }
       );
     }
-    const isAlreadyReferred =doctor.referredPatients.find(
-      (ref:any) => ref.patient.toString() === patientId
+    const isAlreadyReferred = doctor.referredPatients.find(
+      (ref: any) => ref.patient.toString() === patientId
     );
     if (!isAlreadyReferred) {
       doctor.referredPatients.push({

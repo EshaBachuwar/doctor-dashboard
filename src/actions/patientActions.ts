@@ -17,9 +17,12 @@ export const DELETE_PATIENT_SUCCESS = "DELETE_PATIENT_SUCCESS";
 export const DELETE_PATIENT_FAILURE = "DELETE_PATIENT_FAILURE";
 export const SELECT_PATIENT = "SELECT_PATIENT";
 export const RESET_SELECTED_PATIENT = "RESET_SELECTED_PATIENT";
-export const FETCH_REFERRED_PATIENTS_REQUEST = "FETCH_REFERRED_PATIENTS_REQUEST";
-export const FETCH_REFERRED_PATIENTS_SUCCESS = "FETCH_REFERRED_PATIENTS_SUCCESS";
-export const FETCH_REFERRED_PATIENTS_FAILURE = "FETCH_REFERRED_PATIENTS_FAILURE";
+export const FETCH_REFERRED_PATIENTS_REQUEST =
+  "FETCH_REFERRED_PATIENTS_REQUEST";
+export const FETCH_REFERRED_PATIENTS_SUCCESS =
+  "FETCH_REFERRED_PATIENTS_SUCCESS";
+export const FETCH_REFERRED_PATIENTS_FAILURE =
+  "FETCH_REFERRED_PATIENTS_FAILURE";
 
 interface FetchPatientsRequestAction {
   type: typeof FETCH_PATIENTS_REQUEST;
@@ -150,9 +153,10 @@ export const fetchPatientsFailure = (
   type: FETCH_PATIENTS_FAILURE,
   payload: error,
 });
-export const fetchReferredPatientsRequest = (): FetchReferredPatientsRequestAction => ({
-  type: FETCH_REFERRED_PATIENTS_REQUEST,
-});
+export const fetchReferredPatientsRequest =
+  (): FetchReferredPatientsRequestAction => ({
+    type: FETCH_REFERRED_PATIENTS_REQUEST,
+  });
 
 export const fetchReferredPatientsSuccess = (
   patients: Patient[]

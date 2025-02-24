@@ -46,15 +46,15 @@ export async function GET(
         _id: { $in: patientIds },
         createdAt: {
           $gte: startOfWeek,
-          $lt: tomorrow
-        }
+          $lt: tomorrow,
+        },
       });
       monthVisitCount = await Patient.countDocuments({
         _id: { $in: patientIds },
         createdAt: {
           $gte: startOfMonth,
-          $lt: tomorrow
-        }
+          $lt: tomorrow,
+        },
       });
     }
     return NextResponse.json(

@@ -3,13 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/store";
-
-import {
-  UserCircle,
-  Calendar,
-  Stethoscope,
-  ClipboardList,
-} from "lucide-react";
+import { UserCircle, Calendar, Stethoscope, ClipboardList } from "lucide-react";
 import { Navbar } from "@/components/navbar/Navbar";
 import { Patient } from "@/components/patient/Patient";
 import { PatientList } from "@/components/patient/PatientList";

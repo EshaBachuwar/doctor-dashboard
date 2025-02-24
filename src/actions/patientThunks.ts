@@ -162,7 +162,7 @@ export const deletePatient =
     }
   };
 
-  export const fetchReferredPatients =
+export const fetchReferredPatients =
   (doctorId: string) => async (dispatch: AppDispatch) => {
     dispatch(fetchReferredPatientsRequest());
     try {
@@ -177,7 +177,7 @@ export const deletePatient =
       const modifiedData = data.map((patient: any) => ({
         ...patient,
         id: patient._id, // Add `id` field
-        _id: undefined,   // Optionally remove `_id`
+        _id: undefined, // Optionally remove `_id`
       }));
       dispatch(fetchReferredPatientsSuccess(modifiedData));
     } catch (error) {
