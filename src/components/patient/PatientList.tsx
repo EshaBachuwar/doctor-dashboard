@@ -69,8 +69,6 @@ export const PatientList: React.FC<PatientListProps> = ({
     setPatientId(patientId);
     setOpenRefer(true);
   };
-  console.log(referredPatients);
-  console.log(patients);
   const visiblePatients = patientList ? patients || [] : referredPatients || [];
   const filteredPatients = visiblePatients?.filter((patient) =>
     patient?.name?.toLowerCase().includes(searchTerm.toLowerCase())

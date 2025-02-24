@@ -19,6 +19,10 @@ export const Navbar: React.FC = () => {
       });
       if (response.ok) {
         localStorage.removeItem("token");
+        localStorage.removeItem("monthVisitCount");
+        localStorage.removeItem("todayVisitCount");
+        localStorage.removeItem("weekVisitCount");
+        localStorage.removeItem("theme");
 
         dispatch({ type: "AUTH/LOGOUT" });
 
