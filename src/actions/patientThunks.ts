@@ -100,7 +100,6 @@ export const updatePatient =
     dispatch(updatePatientRequest());
     try {
       let response;
-      console.log(reportFile);
       if (reportFile) {
         const formData = new FormData();
         formData.append("file", reportFile);

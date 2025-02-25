@@ -213,7 +213,6 @@ export const EditPatient: React.FC<EditPatientProps> = ({
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-      console.log(reportFile);
       dispatch(
         updatePatient({
           patient: patientData,

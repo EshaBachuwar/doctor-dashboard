@@ -33,7 +33,8 @@ export const Patient: React.FC<PatientProps> = ({
   const handleEdit = () => {
     setRightPanel("edit");
   };
-  return (
+  const report = Object.values(selectedPatient?.reports || {});
+    return (
     <div
       className={`${
         darkMode ? "bg-gray-700 text-white" : "bg-pink-100 text-black"
@@ -184,12 +185,12 @@ export const Patient: React.FC<PatientProps> = ({
               {selectedPatient?.reports?.map((report, index) => (
                 <div key={index} className="mt-2">
                   <a
-                    href={report.fileUrl}
+                    href={Object.values(report || {})[0].fileUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="text-blue-500 underline"
                   >
-                    {report.fileName}
+                    {Object.values(report || {})[0].fileName}
                   </a>
                 </div>
               ))}

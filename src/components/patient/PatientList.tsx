@@ -50,7 +50,6 @@ export const PatientList: React.FC<PatientListProps> = ({
   ) => {
     e.preventDefault();
     setPatientId(patientId);
-    console.log(patientId);
     setRightPanel("view");
   };
 

@@ -50,7 +50,6 @@ export async function PUT(
     if (contentType.includes("multipart/form-data")) {
       const formData = await req.formData();
       file = formData.get("file") as File | null;
-      console.log(file,"wufjdewjf");
       data = {} as { [key: string]: any };
       for (const [key, value] of formData.entries()) {
         if (key !== "file") {
@@ -97,7 +96,6 @@ export async function PUT(
           fileUrl: `/uploads/${newFilename}`,
           createdAt: new Date(),
         };
-        console.log(patient.reports);
         patient.addReport(report);
       } else {
         if (!patient.reports) {
