@@ -43,3 +43,5 @@ next-env.d.ts
 # Ignore IDE-specific files
 .vscode/
 .idea/
+
+/public/uploads/*

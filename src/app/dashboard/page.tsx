@@ -102,7 +102,7 @@ export default function DashboardPage() {
             <Patient setRightPanel={setRightPanel} patientId={patientId} />
           )}
           {rightPanel === "edit" && (
-            <EditPatient setRightPanel={setRightPanel} patientid={patientId} />
+            <EditPatient setRightPanel={setRightPanel} patientid={patientId} setPatientId={setPatientId} />
           )}
         </div>
       </div>

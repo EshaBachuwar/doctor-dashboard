@@ -47,11 +47,10 @@ export async function PUT(
     const contentType = req.headers.get("content-type") || "";
     let data;
     let file: File | null = null;
-
     if (contentType.includes("multipart/form-data")) {
       const formData = await req.formData();
       file = formData.get("file") as File | null;
-
+      console.log(file,"wufjdewjf");
       data = {} as { [key: string]: any };
       for (const [key, value] of formData.entries()) {
         if (key !== "file") {
@@ -90,20 +89,37 @@ export async function PUT(
 
       const bytes = await file.arrayBuffer();
       await writeFile(filePath, Buffer.from(bytes));
-
-      const report: IReport = {
-        patientId: patient._id as Types.ObjectId,
-        doctorId: patient.doctor,
-        fileName: file.name,
-        fileUrl: `/uploads/${newFilename}`,
-        createdAt: new Date(),
-      };
-
-      patient.addReport(report);
+      if (typeof patient.addReport === 'function') {
+        const report: IReport = {
+          patientId: patient._id as Types.ObjectId,
+          doctorId: patient.doctor,
+          fileName: file.name,
+          fileUrl: `/uploads/${newFilename}`,
+          createdAt: new Date(),
+        };
+        console.log(patient.reports);
+        patient.addReport(report);
+      } else {
+        if (!patient.reports) {
+          patient.reports = [];
+        }
+        patient.reports.push({
+          patientId:  patient._id as Types.ObjectId,
+          doctorId: patient.doctor,
+          fileName: file.name,
+          fileUrl: `/uploads/${newFilename}`,
+          createdAt: new Date(),
+        });
+      }
     }
 
-    Object.assign(patient, data);
-    await patient.save();
+    if (data) {
+      Object.entries(data).forEach(([key, value]) => {
+        if (key !== '_id' && key !== 'reports') { // Avoid overwriting _id and reports
+          (patient as any)[key] = value;
+        }
+      });
+    }    await patient.save();
 
     return NextResponse.json(patient.toPatient());
   } catch (error) {

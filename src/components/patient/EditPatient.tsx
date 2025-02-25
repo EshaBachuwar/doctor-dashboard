@@ -8,10 +8,13 @@ import { updatePatient } from "@/actions/patientThunks";
 import { apiClient } from "@/lib/api-client";
 import { DiseaseResponse } from "@/types/disease";
 import { useTheme } from "@/context/ThemeContext";
+import { report } from "process";
+import { resetSelectedPatient } from "@/actions/patientActions";
 
 interface EditPatientProps {
   setRightPanel: (panel: string) => void;
   patientid: string;
+  setPatientId: (id: string) => void;
 }
 interface Medication {
   name: string;
@@ -25,6 +28,7 @@ interface Medication {
 export const EditPatient: React.FC<EditPatientProps> = ({
   setRightPanel,
   patientid,
+  setPatientId
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [medications, setMedications] = useState<Medication[]>(
@@ -209,6 +213,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
+      console.log(reportFile);
       dispatch(
         updatePatient({
           patient: patientData,
@@ -216,6 +221,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
         })
       );
       setReportFile(null);
+      dispatch(resetSelectedPatient());
       setRightPanel("list");
     } catch (error) {
       console.error("Error creating patient:", error);
@@ -519,7 +525,7 @@ export const EditPatient: React.FC<EditPatientProps> = ({
                 </label>
                 <input
                   type="file"
-                  accept=".pdf"
+                  accept=".pdf,application/pdf"
                   onChange={handleFileChange}
                   className="w-full p-2 border rounded"
                 />

@@ -201,6 +201,7 @@ PatientSchema.methods.addReport = function (report: IReport) {
     this.reports = [];
   }
   this.reports.push(report);
+  console.log(this.reports);
 };
 
 PatientSchema.statics.findByDoctor = function (
