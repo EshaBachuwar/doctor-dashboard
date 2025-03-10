@@ -33,8 +33,7 @@ export const Patient: React.FC<PatientProps> = ({
   const handleEdit = () => {
     setRightPanel("edit");
   };
-  const report = Object.values(selectedPatient?.reports || {});
-    return (
+  return (
     <div
       className={`${
         darkMode ? "bg-gray-700 text-white" : "bg-pink-100 text-black"

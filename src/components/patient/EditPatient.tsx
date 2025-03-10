@@ -14,7 +14,6 @@ import { resetSelectedPatient } from "@/actions/patientActions";
 interface EditPatientProps {
   setRightPanel: (panel: string) => void;
   patientid: string;
-  setPatientId: (id: string) => void;
 }
 interface Medication {
   name: string;
@@ -28,7 +27,6 @@ interface Medication {
 export const EditPatient: React.FC<EditPatientProps> = ({
   setRightPanel,
   patientid,
-  setPatientId
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [medications, setMedications] = useState<Medication[]>(
